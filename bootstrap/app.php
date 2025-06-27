@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ->group(base_path('routes/owner-api.php'));
  
         Route::middleware('web')
-            ->prefix('web')
+            ->prefix('/')
             ->group(base_path('routes/web.php'));
     },
 )
