@@ -10,15 +10,12 @@ class AuthController extends Controller
 {
   public function login(Request $request)
   {
-    $username = 'gymadmin';
-    $password = 'password123'; // Replace with your actual password
+    $username = $request->input('name');
+    $password = $request->input('password'); // Replace with your actual password
 
     if (!$username || !$password) {
       return response()->json(['message' => 'Username and password are required'], 400);
     }
-    
-
-
     
     $seller = \App\Models\Seller::where('name', $username)
       ->first();
