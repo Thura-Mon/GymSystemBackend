@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
 use Illuminate\Support\Facades\Hash;
 
-Route::get('/login',[AuthController::class, 'login'])->middleware();
+Route::post('/login',[AuthController::class, 'login'])->middleware();
 
 
 // Route::get('/insert-seller', function () {
