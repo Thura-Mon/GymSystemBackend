@@ -29,10 +29,10 @@ Route::get('/sellers', function () {
 
 
 
-Route::get('/validate-seller', function (Request $request) {
+Route::get('/', function (Request $request) {
 
-    $username = $request->input('username');
-    $password = $request->input('password');
+    $username = 'gymadmin';
+    $password = 'password123';
     if (!$username || !$password) {
         return response()->json(['message' => 'Username and password are required'], 400);
     }
