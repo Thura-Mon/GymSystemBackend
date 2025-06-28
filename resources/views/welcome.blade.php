@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to Laravel</h1>
+    <h1 style="color: orange;">Welcome to Our Supreme Gym</h1>
 </body>
 </html>
