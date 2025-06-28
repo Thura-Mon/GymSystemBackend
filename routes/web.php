@@ -9,5 +9,5 @@ use Illuminate\Support\Facades\Request;
 
 
 Route::get('/', function () {
-    return view('welcome'); // This will show hello.blade.php
+    return view('welcome'); 
 });
