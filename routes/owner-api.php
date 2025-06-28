@@ -6,7 +6,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
 use Illuminate\Support\Facades\Hash;
 
-Route::post('/login',[AuthController::class, 'login'])->middleware();
+Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
+
+Route::get('/total-members', [\App\Http\Controllers\Owner\TotalMemberController::class, 'totalMembers']); // Total members count
+
+Route::get('/total-active-members', [\App\Http\Controllers\Owner\TotalMemberController::class, 'totalActiveMembers']); // Total active members count
+
+Route::get('/total-inactive-members', [\App\Http\Controllers\Owner\TotalMemberController::class, 'totalInactiveMembers']); // Total inactive members count
+
+
 
 
 // Route::get('/insert-seller', function () {
