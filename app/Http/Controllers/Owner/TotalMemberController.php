@@ -21,7 +21,7 @@ class TotalMemberController extends Controller
     // Total members count with active status (m_flag = 0 or)
     public function totalActiveMembers(Request $request)
     {
-        $totalActiveMembers = \App\Models\member::where('status', 'active')->count();
+        $totalActiveMembers = \App\Models\member::where('m_flag', 0)->count();
         return response()->json([
             'total_active_members' => $totalActiveMembers
         ]);         
