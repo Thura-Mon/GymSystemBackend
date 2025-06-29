@@ -109,7 +109,7 @@
   </style>
 </head>
 <body>
-  <h1>Our Developers</h1>
+  <h1>Supreme Gym developer</h1>
   <div class="team-container">
     <div class="developer-card" tabindex="0">
       <div class="avatar" aria-label="Cartoon avatar of Alice">
@@ -122,7 +122,7 @@
           <path d="M20 44c4 6 24 6 28 0" stroke="#064e03" stroke-width="3" fill="none" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="name">Alice Johnson</div>
+      <div class="name">Thet Paing OO</div>
       <div class="role">Frontend Developer</div>
     </div>
 
@@ -136,7 +136,7 @@
           <path d="M22 42c4 5 20 5 24 0" stroke="#064e03" stroke-width="3" fill="none" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="name">Bob Smith</div>
+      <div class="name">Myo Thida Htun</div>
       <div class="role">Backend Developer</div>
     </div>
 
@@ -150,7 +150,7 @@
           <path d="M20 44c6 6 24 6 28 0" stroke="#064e03" stroke-width="3" fill="none" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="name">Clara Lee</div>
+      <div class="name">Thit San</div>
       <div class="role">UI/UX Designer</div>
     </div>
 
@@ -164,8 +164,8 @@
           <path d="M22 44c5 6 20 6 24 0" stroke="#064e03" stroke-width="3" fill="none" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="name">David Kim</div>
-      <div class="role">Full Stack Developer</div>
+      <div class="name">Thura Mon</div>
+      <div class="role">Frontend Developer</div>
     </div>
   </div>
 </body>
