@@ -2,17 +2,18 @@
 
 use App\Models\Seller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Owner\MemberController;
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
-Route::post('/total-members', [\App\Http\Controllers\Owner\MemberController::class, 'totalMembers']); // Total members count
+Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
-Route::post('/total-active-members', [\App\Http\Controllers\Owner\MemberController::class, 'totalActiveMembers']); // Total active members count
+Route::post('/total-active-members', [MemberController::class, 'totalActiveMembers']); // Total active members count
 
-Route::post('/total-inactive-members', [\App\Http\Controllers\Owner\MemberController::class, 'totalInactiveMembers']); // Total inactive members count
+Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
 
 
