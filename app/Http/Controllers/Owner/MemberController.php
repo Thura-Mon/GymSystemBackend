@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Owner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TotalMemberController extends Controller
+class MemberController extends Controller
 {
     // Total members count
     public function totalMembers(Request $request)
