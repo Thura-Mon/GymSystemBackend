@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MemberController extends Controller
 {
