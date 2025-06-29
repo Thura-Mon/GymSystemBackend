@@ -9,7 +9,7 @@ use App\Http\Controllers\Owner\MemberController;
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
-Route::get('/total-members', [MemberController::class, 'totalMembers']); // Total members count
+Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
 Route::post('/total-active-members', [MemberController::class, 'totalActiveMembers']); // Total active members count
 
