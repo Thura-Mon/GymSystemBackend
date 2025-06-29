@@ -18,14 +18,23 @@ class MemberController extends Controller
     }
 
 
-    // Total members count with active status (m_flag = 0 or)
+    // Total members count with active status (m_flag = 1)
     public function totalActiveMembers(Request $request)
     {
-        $totalActiveMembers = \App\Models\Member::where('m_flag', 0)->count();
+        $totalActiveMembers = \App\Models\Member::where('m_flag', 1)->count();
         return response()->json([
             'total_active_members' => $totalActiveMembers
         ]);         
 
+    }
+
+    // Total members count with inactive status (m_flag = 0)
+    public function totalInactiveMembers(Request $request)
+    {
+        $totalInactiveMembers = \App\Models\Member::where('m_flag', 0)->count();
+        return response()->json([
+            'total_inactive_members' => $totalInactiveMembers
+        ]);     
     }
 
 }
