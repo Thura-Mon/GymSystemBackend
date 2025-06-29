@@ -16,17 +16,6 @@ Route::post('/total-active-members', [MemberController::class, 'totalActiveMembe
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
 
-
-
-// Route::get('/insert-seller', function () {
-//     $seller = \App\Models\Seller::create([
-//         'name' => 'John Supabase',
-//         'password' => 'password123',
-//     ]);
-
-//     return response()->json($seller);
-// });
-
 Route::get('/sellers', function () {
 
     $sellers = \App\Models\Seller::first();
