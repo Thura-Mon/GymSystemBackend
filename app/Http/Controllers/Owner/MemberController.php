@@ -10,7 +10,7 @@ class MemberController extends Controller
     // Total members count
     public function totalMembers(Request $request)
     {
-        $totalMembers = \App\Models\member::count();
+        $totalMembers = \App\Models\Member::count();
 
         return response()->json([
             'total_members' => $totalMembers
@@ -21,7 +21,7 @@ class MemberController extends Controller
     // Total members count with active status (m_flag = 0 or)
     public function totalActiveMembers(Request $request)
     {
-        $totalActiveMembers = \App\Models\member::where('m_flag', 0)->count();
+        $totalActiveMembers = \App\Models\Member::where('m_flag', 0)->count();
         return response()->json([
             'total_active_members' => $totalActiveMembers
         ]);         
