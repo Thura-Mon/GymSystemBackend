@@ -20,7 +20,6 @@ return new class extends Migration
         $table->string('m_phone');
         $table->string('m_email');
         $table->string('m_password');
-        $table->string('m_qr_code');
         $table->integer('m_flag');
 
 
