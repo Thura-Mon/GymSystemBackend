@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
- // Add / Register a new member
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
@@ -19,6 +18,7 @@ Route::post('/total-active-members', [MemberController::class, 'totalActiveMembe
 
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
+Route::post('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
 Route::get('/sellers', function () {
 
@@ -49,6 +49,6 @@ Route::get('/', function (Request $request) {
 });
 
 
-Route::post('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
+
 
 
