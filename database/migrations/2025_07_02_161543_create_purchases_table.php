@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('p_id')->primary();
             $table->string('p_month')->comment('Month of the purchase');
             $table->string('p_amount')->comment('Amount of the purchase');
-            $table->string('p_expiration')->comment('Expiration date of the purchase');
+            $table->integer('p_expiration')->comment('Expiration date of the purchase');
             $table->timestamps();
         });
     }

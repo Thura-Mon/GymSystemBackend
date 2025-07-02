@@ -11,8 +11,9 @@ class MemberController extends Controller
     // Add / Register a new member
     public function addMember(Request $request)
     {
+        
         $data = $request->validate([
-            'm_name' => 'required|string|min:3|max:255',
+            'm_name' => '',
             'm_age' => 'required|integer|min:0|max:120',
             'm_weight' => 'required|integer|min:0|max:500',
             'm_height' => 'required|integer|min:0|max:300',

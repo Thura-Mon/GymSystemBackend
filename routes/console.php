@@ -1,9 +1,13 @@
 <?php
 
 use App\Models\Seller;
+use App\Models\Purchase;
+use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Artisan;
+use League\CommonMark\Extension\Attributes\Node\Attributes;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -31,3 +35,42 @@ Artisan::command('app:create-super-admin', function () {
 
     $this->info("Super Admin created with ID: {$seller->id}");
 })->purpose('Create a super admin user');
+
+
+// Creating Purchase Records
+Artisan::command('app:create-purchases', function(){
+    $purchase = Purchase::create(attributes :[
+        'p_id' => 1,
+        'p_month' => "1",
+        'p_amount' => "35000",
+        'p_expiration' => Carbon::now()->addDays(45)->toDateString(),
+    ]);
+    $this->info("Created one purchase's record successfully");
+
+});
+
+Artisan::command('app:create-purchases', function(){
+    $purchase = Purchase::create(attributes :[
+        'p_id' => 3,
+        'p_month' => "3",
+        'p_amount' => "85000",
+        'p_expiration' => 105,
+    ]);
+    $this->info("Created one purchase's record successfully");
+
+});
+
+Artisan::command('app:delete-purchases', function () {
+    $deleted = Purchase::where([
+        'p_id' => 3,
+        'p_month' => "3",
+        'p_amount' => "80000",
+        'p_expiration' => Carbon::now()->addDays(105)->toDateString(),
+    ])->delete();
+
+    if ($deleted) {
+        $this->info("Deleted $deleted purchase record(s) successfully.");
+    } else {
+        $this->warn("No matching purchase records found to delete.");
+    }
+});

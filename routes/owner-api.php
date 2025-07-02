@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
 use App\Http\Controllers\Owner\MemberController;
+use App\Http\Controllers\Owner\PurchaseController;
  // Add / Register a new member
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
@@ -48,6 +49,6 @@ Route::get('/', function (Request $request) {
 });
 
 
-
+Route::get('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
 

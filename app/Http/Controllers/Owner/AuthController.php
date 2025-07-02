@@ -11,7 +11,7 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     $username = $request->input('name');
-    $password = $request->input('password'); // Replace with your actual password
+    $password = $request->input('password');
 
     if (!$username || !$password) {
       return response()->json(['message' => 'Username and password are required'], 400);

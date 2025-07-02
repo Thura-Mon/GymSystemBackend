@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('body_builders', function (Blueprint $table) {
-            $table->unsignedInteger('b_id');
+            $table->id('b_id'); // shorthand for unsigned big integer + auto-increment + primary key
             $table->string('b_name')->comment('Name of the bodybuilder');
             $table->string('b_description')->nullable()->comment('Description of the bodybuilder');
             $table->string('b_phone')->comment('Phone number of the bodybuilder');
-            $table->binary('b_image')->nullable()->comment('Image of the bodybuilder');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bodybuilders');
+        Schema::dropIfExists('body_builders');
     }
 };
