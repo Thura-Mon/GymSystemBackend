@@ -17,6 +17,6 @@ class PurchaseController extends Controller
         // Fetch purchases with that plan category (e.g., p_month)
         $purchases = \App\Models\Purchase::where('p_month', $planCategory)->get();
 
-        return response()->json($purchases);
+         return response()->json(['message' => 'success'], 200);
     }
 }
