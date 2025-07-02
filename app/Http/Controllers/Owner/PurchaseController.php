@@ -12,7 +12,8 @@ class PurchaseController extends Controller
        
 
         if (in_array($planCategory, [1, 2, 3])) {
-            return response()->json(['message' => 'success'],200);
+             $purchases = \App\Models\Purchase::where('p_month', $planCategory)->get();
+            return response()->json(['message' => 'success', $purchases],200);
             
         }
 
