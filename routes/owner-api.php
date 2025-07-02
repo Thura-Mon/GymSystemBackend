@@ -18,7 +18,7 @@ Route::post('/total-active-members', [MemberController::class, 'totalActiveMembe
 
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
-Route::post('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
+Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
 Route::get('/sellers', function () {
 
