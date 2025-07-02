@@ -49,6 +49,6 @@ Route::get('/', function (Request $request) {
 });
 
 
-Route::get('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
+Route::post('purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
 
