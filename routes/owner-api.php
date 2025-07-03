@@ -33,19 +33,9 @@ Route::get('/sellers', function () {
 
 Route::get('/', function (Request $request) {
 
-    $username = 'gymadmin';
-    $password = 'password123';
-    if (!$username || !$password) {
-        return response()->json(['message' => 'Username and password are required'], 400);
-    }
-    $seller = \App\Models\Seller::where('name', $username)
-        ->first();
+    echo "Welcome Seller";
 
-    if (Hash::check($password, $seller->password)) {
-        return response()->json(['message' => 'Seller is valid'], 200);
-    }
 
-    return response()->json(['message' => 'Invalid seller credentials'], 401);
 });
 
 
