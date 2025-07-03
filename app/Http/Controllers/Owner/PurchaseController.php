@@ -11,9 +11,11 @@ class PurchaseController extends Controller
         $planCategory = $request->input('category');
         $purchases = \App\Models\Purchase::where('p_id', $planCategory)->get();
 
-        if ($planCategory == 1 || $planCategory == 2 || $planCategory == 3) {
+        if (in_array($planCategory, [1, 2, 3])) {
             
-            return response()->json(['purchases' => $purchases], 200);
+            return response()->json([
+            'message' => 'Successful',
+            'purchases' => $purchases], 200);
         }
       
     }
