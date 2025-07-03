@@ -11,12 +11,11 @@ class PurchaseController extends Controller
         $planCategory = $request->input('category');
         $purchases = \App\Models\Purchase::where('p_month', $planCategory)->first();
 
-        if (in_array($planCategory, [1, 2, 3])) {
+        if ($planCategory == 1 || $planCategory == 2 || $planCategory == 3) {
             
             return response()->json([
-                'message' => 'Success',
                 'purchases' => $purchases
-            ])->setStatusCode(200);
+            ], 200);
         }
       
     }
