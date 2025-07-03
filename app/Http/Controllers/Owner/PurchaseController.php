@@ -9,13 +9,14 @@ class PurchaseController extends Controller
     public function viewPurchase(Request $request)
     {
         $planCategory = $request->input('category');
-        $purchases = \App\Models\Purchase::where('p_month', $planCategory)->get();
+        $purchases = \App\Models\Purchase::where('p_month', $planCategory)->first();
 
         if (in_array($planCategory, [1, 2, 3])) {
             
             return response()->json([
+                'message' => 'Success',
                 'purchases' => $purchases
-            ], 400);
+            ])->setStatusCode(200);
         }
       
     }
