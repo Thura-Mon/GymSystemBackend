@@ -9,7 +9,7 @@ class PurchaseController extends Controller
     public function viewPurchase(Request $request)
     {
         $planCategory = $request->input('category');
-        $purchases = \App\Models\Purchase::where('p_id', $planCategory)->first();
+        $purchases = \App\Models\Purchase::where('p_id', $planCategory)->get();
 
         if ($planCategory == 1 || $planCategory == 2 || $planCategory == 3) {
             
