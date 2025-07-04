@@ -10,7 +10,7 @@ use App\Http\Controllers\Owner\PurchaseController;
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
-Route::get('/add-members', [MemberController::class, 'addMember']); // Add / Register a new member
+Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Register a new member
 
 Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
