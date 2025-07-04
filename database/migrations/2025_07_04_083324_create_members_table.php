@@ -12,7 +12,7 @@ return new class extends Migration
    public function up(): void
 {
     Schema::create('members', function (Blueprint $table) {
-        $table->unsignedBigInteger('m_id')->primary();
+        $table->bigIncrements('m_id');
         $table->string('m_name');
         $table->integer('m_age');
         $table->integer('m_weight');
@@ -24,16 +24,13 @@ return new class extends Migration
 
 
         $table->unsignedBigInteger('p_id');
-        $table->unsignedBigInteger('c_id');
 
         $table->foreign('p_id')->references('p_id')->on('purchases')
               ->onDelete('cascade')->onUpdate('cascade');
-        $table->foreign('c_id')->references('c_id')->on('cashes')
-              ->onDelete('cascade')->onUpdate('cascade');
 
-        $table->integer('m_amount');
+        $table->date('m_reg_date')->default(now());
         $table->date('m_expiry_date');
-        $table->timestamps();
+    
     });
 }
 

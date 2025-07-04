@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Member;
 use App\Models\Seller;
 use App\Models\Purchase;
+use App\Models\Cash;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Date;
@@ -40,32 +42,22 @@ Artisan::command('app:create-super-admin', function () {
 // Creating Purchase Records
 Artisan::command('app:create-purchases', function(){
     $purchase = Purchase::create(attributes :[
-        'p_id' => 1,
-        'p_month' => "1",
-        'p_amount' => "35000",
-        'p_expiration' => Carbon::now()->addDays(45)->toDateString(),
-    ]);
-    $this->info("Created one purchase's record successfully");
-
-});
-
-Artisan::command('app:create-purchases', function(){
-    $purchase = Purchase::create(attributes :[
         'p_id' => 3,
         'p_month' => "3",
         'p_amount' => "85000",
-        'p_expiration' => 105,
+        'p_expiration' => 111,
     ]);
     $this->info("Created one purchase's record successfully");
 
 });
 
+
 Artisan::command('app:delete-purchases', function () {
     $deleted = Purchase::where([
-        'p_id' => 3,
-        'p_month' => "3",
-        'p_amount' => "80000",
-        'p_expiration' => Carbon::now()->addDays(105)->toDateString(),
+        'p_id' => 1,
+        'p_month' => "1",
+        'p_amount' => "35000",
+        'p_expiration' => 45,
     ])->delete();
 
     if ($deleted) {
@@ -74,3 +66,24 @@ Artisan::command('app:delete-purchases', function () {
         $this->warn("No matching purchase records found to delete.");
     }
 });
+
+
+
+// cash Transaction
+
+Artisan::command('app:create-cash-transaction', function () {
+    $cashTransaction = \App\Models\CashTransaction::create([
+        'ct_id' => 3, 
+        'ct_type' => 'Cash',
+        'c_flag' => 3,
+        'ct_total' =>0,
+    ]);
+
+})->purpose('Create a cash transaction record');
+
+
+
+Artisan::command('app:delete', function () {
+    $deletedCount = Cash::truncate();
+    $this->info("Sellers table truncated. Deleted records.");
+})->purpose('Truncate the sellers table');

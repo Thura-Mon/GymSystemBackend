@@ -17,3 +17,7 @@ class Purchase extends Model
         'p_expiration',
     ];
 }
+
+
+
+

@@ -1,59 +1,111 @@
 <?php
 
 namespace App\Http\Controllers\Owner;
-
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use \App\Models\Member;
 
 class MemberController extends Controller
 {
 
     // Add / Register a new member
     public function addMember(Request $request)
-    {
-        
-        $data = $request->validate([
-            'm_name' => '',
-            'm_age' => 'required|integer|min:0|max:120',
-            'm_weight' => 'required|integer|min:0|max:500',
-            'm_height' => 'required|integer|min:0|max:300',
-            'm_phone' => 'required|string|max:15|unique:members',
-            'm_email' => 'required|string|max:255|unique:members',
-            'm_password' => 'required|string|min:6|max:255',
-            'm_flag' => 'required|integer|in:0,1', // 0 for inactive, 1 for active
-            'p_id' => 'required|exists:purchases,p_id',
-            'c_id' => 'required|exists:cashes,c_id',
-            'm_amount' => 'required|integer|min:0',
-            'm_expiry_date' => 'required|date',
-        ]);
-        $member = \App\Models\Member::create($data);
-        return response()->json([
-            'message' => 'Member added successfully',
-            'member' => $member
-        ], 201);
-    }
+{
 
-    // Purchase a membership
-    public function purchaseMembership(Request $request)
-    {
-        $data = $request->validate([
-            'm_id' => 'required|exists:members,m_id',
-            'p_id' => 'required|exists:purchases,p_id',
-            'c_id' => 'required|exists:cashes,c_id',
-            'm_amount' => 'required|integer|min:0',
-            'm_expiry_date' => 'required|date',
+DB::beginTransaction();
+    try {
+        // Create Member
+        
+            $mName = $request->input('m_name');
+            $mAge = $request->input('m_age');
+            $mWeight = $request->input('m_weight');
+            $mHeight = $request->input('m_height');
+            $mPhone = $request->input('m_phone');
+            $mEmail = $request->input('m_email');
+            $mPassword = $request->input('m_password');
+            $mFlag = $request->input('m_flag', 1); // 1 for active
+            $pId = $request->input('p_id'); // purchaes ID
+            $mRegDate = $request->input('m_reg_date');
+
+            
+
+            // Calculate expiry date
+
+
+            $mExpDate = $request->input('m_expiry_date');
+
+
+             // Check if the email already existed
+            if(Member::where('m_email', $mEmail)->exists()){
+                return response()->json([
+                    'error' => 'Email Already exists.'
+                ], 400);
+            }
+        
+
+        // Determine c_flag based on c_type
+        $cashType = $request->input('c_type');
+        $cFlag = match ($cashType) {
+            'Kpay' => 1,
+            'CB' => 2,
+            'Cash' => 3,
+            default => throw new \Exception('Invalid cash type'),
+        };
+
+        
+        // Create Cash record
+        $cash = \App\Models\Cash::create([
+            'c_amount' => $request->input('c_amount'),
+            'c_type' => $cashType,
+            'c_flag' => $cFlag,
+            'c_note' => $request->input('c_note', default: ''),
+            'c_date' => now(),
         ]);
-        $member = \App\Models\Member::findOrFail($data['m_id']);
-        $member->p_id = $data['p_id'];
-        $member->c_id = $data['c_id'];
-        $member->m_amount = $data['m_amount'];
-        $member->m_expiry_date = $data['m_expiry_date'];
-        $member->save();        
+
+        // Create Member record
+        $member = \App\Models\Member::create([
+            'm_name' => $mName,
+            'm_age' => $mAge,
+            'm_weight' => $mWeight,
+            'm_height' => $mHeight,
+            'm_phone' => $mPhone,
+            'm_email' => $mEmail,
+            'm_password' => Hash::make($mPassword), // Hash the password // AutoGenerate password
+            'm_flag' => $mFlag,
+            'p_id' => $pId,
+            'm_reg_date' => $mRegDate,
+            'm_expiry_date' => $mExpDate,
+        ]);     
+
+        
+        // Create Cash Transaction record
+        $initAmount = \App\Models\CashTransaction::where('ct_type', $cashType)->value('ct_total');
+        $finalTotalAmount = $initAmount + $cash->c_amount;
+
+        \App\Models\CashTransaction::where('ct_type', $cashType)->update([
+            'ct_total' => $finalTotalAmount
+        ]); 
+
+        DB::commit();
+
         return response()->json([
-            'message' => 'Membership purchased successfully',
-            'member' => $member
-        ], 200);
+            'message' => 'Member and Cash record created successfully',
+            'member' => $member,
+            'cash' => $cash,
+            'total_amount' => $finalTotalAmount,
+        ], 201);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'message' => 'Error occurred',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
 
     // Total members count

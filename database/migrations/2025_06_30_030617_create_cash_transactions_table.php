@@ -12,14 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cash_transactions', function (Blueprint $table) {
-            $table->unsignedBigInteger('ct_id')->primary()->comment('Transaction ID');
-            $table->unsignedBigInteger('c_id');
-            $table->foreign('c_id')->references('c_id')->on('cashes')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->bigIncrements('ct_id')->comment('Transaction ID');
             $table->string('ct_type')->comment('Type of transaction (e.g., deposit, withdrawal)');
             $table->integer('ct_total')->comment('Total amount of the transaction');
-            $table->integer('c_flag')->comment('0, 1, 2 for different cash account types');
+            $table->integer('c_flag')->comment('1, 2, 3 for different cash account types');
             $table->timestamps();
 
             
