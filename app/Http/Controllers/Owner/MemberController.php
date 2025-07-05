@@ -35,11 +35,11 @@ DB::beginTransaction();
             $mExpDate = null;
 
             // Calculate expiry date
-            if($pId == 1){
+            if($pId == '1'){
                 $mExpDate = $mRegDate->copy()->addDays(37); // 1 month
-            } elseif($pId == 2) {
+            } elseif($pId == '2') {
                 $mExpDate = $mRegDate->copy()->addDays(74);  // 2 months
-            } elseif($pId == 3) {
+            } elseif($pId == '3') {
                 $mExpDate = $mRegDate->copy()->addDays(111);  // 3 months
             } else {
                 return response()->json([
