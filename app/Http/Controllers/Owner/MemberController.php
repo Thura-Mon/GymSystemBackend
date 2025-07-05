@@ -63,7 +63,7 @@ DB::beginTransaction();
             'm_height' => $mHeight,
             'm_phone' => $mPhone,
             'm_email' => $mEmail,
-            'm_password' => Hash::make($mPassword), // Hash the password // AutoGenerate password
+            'm_password' => $mPassword, // Hash the password // AutoGenerate password
             'm_flag' => $mFlag,
             'p_id' => $pId,
             'm_reg_date' => $mRegDate,
