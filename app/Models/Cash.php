@@ -19,5 +19,6 @@ class Cash extends Model
         'c_flag',
         'c_note',
         'c_date',
+        'm_id', // Assuming this is the member ID associated with the cash record
     ];
 }

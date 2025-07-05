@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use \App\Models\Member;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
@@ -15,6 +16,8 @@ class MemberController extends Controller
 {
 
 DB::beginTransaction();
+
+
     try {
         // Create Member
         
@@ -27,22 +30,45 @@ DB::beginTransaction();
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
             $pId = $request->input('p_id'); // purchaes ID
-            $mRegDate = $request->input('m_reg_date');
-
-            
+            $mRegDateInput = $request->input('m_reg_date');
+            $mRegDate = $mRegDateInput ? Carbon::parse($mRegDateInput) : Carbon::now();
+            $mExpDate = null;
 
             // Calculate expiry date
-
-
-            $mExpDate = $request->input('m_expiry_date');
-
-
-             // Check if the email already existed
+            if($pId == 1){
+                $mExpDate = $mRegDate->copy()->addDays(37); // 1 month
+            } elseif($pId == 2) {
+                $mExpDate = $mRegDate->copy()->addDays(74);  // 2 months
+            } elseif($pId == 3) {
+                $mExpDate = $mRegDate->copy()->addDays(111);  // 3 months
+            } else {
+                return response()->json([
+                    'error' => 'Invalid purchase ID.'
+                ], 400);
+            }
+            
+            // Check if the email already existed
             if(Member::where('m_email', $mEmail)->exists()){
                 return response()->json([
                     'error' => 'Email Already exists.'
                 ], 400);
             }
+
+
+             // Create Member record
+            $member = \App\Models\Member::create([
+            'm_name' => $mName,
+            'm_age' => $mAge,
+            'm_weight' => $mWeight,
+            'm_height' => $mHeight,
+            'm_phone' => $mPhone,
+            'm_email' => $mEmail,
+            'm_password' => Hash::make($mPassword), // Hash the password // AutoGenerate password
+            'm_flag' => $mFlag,
+            'p_id' => $pId,
+            'm_reg_date' => $mRegDate,
+            'm_expiry_date' => $mExpDate,
+        ]);     
         
 
         // Determine c_flag based on c_type
@@ -61,23 +87,10 @@ DB::beginTransaction();
             'c_type' => $cashType,
             'c_flag' => $cFlag,
             'c_note' => $request->input('c_note', default: ''),
+            'm_id' => $member->m_id, // Associate with the member
             'c_date' => now(),
-        ]);
 
-        // Create Member record
-        $member = \App\Models\Member::create([
-            'm_name' => $mName,
-            'm_age' => $mAge,
-            'm_weight' => $mWeight,
-            'm_height' => $mHeight,
-            'm_phone' => $mPhone,
-            'm_email' => $mEmail,
-            'm_password' => Hash::make($mPassword), // Hash the password // AutoGenerate password
-            'm_flag' => $mFlag,
-            'p_id' => $pId,
-            'm_reg_date' => $mRegDate,
-            'm_expiry_date' => $mExpDate,
-        ]);     
+        ]);
 
         
         // Create Cash Transaction record

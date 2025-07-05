@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('c_flag')->comment('1, 2, 3 for different cash account types');
             $table->string('c_note')->nullable()->comment('Note for the cash account');
             $table->date('c_date')->comment('Date of the cash transaction');
+            $table->unsignedBigInteger('m_id');
+            $table->foreign('m_id')->references('m_id')->on('members')
+            ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

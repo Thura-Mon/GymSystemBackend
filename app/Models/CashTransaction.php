@@ -23,4 +23,3 @@ class CashTransaction extends Model
     // Define any relationships or additional methods if needed
 
 }
-

@@ -84,6 +84,6 @@ Artisan::command('app:create-cash-transaction', function () {
 
 
 Artisan::command('app:delete', function () {
-    $deletedCount = Cash::truncate();
+    $deletedCount = Member::truncate();
     $this->info("Sellers table truncated. Deleted records.");
 })->purpose('Truncate the sellers table');
