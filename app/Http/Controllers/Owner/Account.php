@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Controllers\Owner;
+
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class Account extends Controller
+{
+    public function cash_transaction(Request $request)
+    {
+        $fromtype = $request->input('fromtype');
+        $totype = $request->input('totype');
+        $tranamount = $request->input('tranamount');
+        $note=$request->input('note');
+
+        if (!$fromtype || !$totype || !$tranamount) {
+            return response()->json(['message' => 'Input required'], 400);
+        }
+
+        // Get current totals
+        $fromTotal = \App\Models\CashTransaction::where('ct_type', $fromtype)->sum('ct_total');
+        $toTotal = \App\Models\CashTransaction::where('ct_type', $totype)->sum('ct_total');
+
+        // Subtract and add the amount
+        $updatedFromTotal = $fromTotal - $tranamount;
+        $updatedToTotal = $toTotal + $tranamount;
+
+        // Optional: prevent negative values
+        if ($updatedFromTotal < 0) {
+            return response()->json(['message' => 'Insufficient funds in fromtype'], 400);
+        }
+
+        // Update both ct_type totals
+        \App\Models\CashTransaction::where('ct_type', $fromtype)->update([
+            'ct_total' => $updatedFromTotal,
+        ]);
+
+        \App\Models\CashTransaction::where('ct_type', $totype)->update([
+            'ct_total' => $updatedToTotal,
+        ]);
+        \App\Models\CashTransactionInformation::create([
+            'i_date' => Carbon::now(),
+            'fromtype' => $fromtype, // Negative for deduction
+            'totype' => $totype, 
+            'amount' => $tranamount,
+            'note' => $note,
+        ]);
+
+        return response()->json([
+            'message' => 'Transaction successful',
+            'fromtype_total' => $updatedFromTotal,
+            'totype_total' => $updatedToTotal
+        ], 200);
+    }
+}
