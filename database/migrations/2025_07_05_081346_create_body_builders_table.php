@@ -12,10 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('body_builders', function (Blueprint $table) {
-            $table->id('b_id'); // shorthand for unsigned big integer + auto-increment + primary key
+            $table->bigIncrements('b_id'); // auto-incrementing primary key
             $table->string('b_name')->comment('Name of the bodybuilder');
-            $table->string('b_description')->nullable()->comment('Description of the bodybuilder');
+            $table->text('b_description')->nullable()->comment('Description of the bodybuilder');
             $table->string('b_phone')->comment('Phone number of the bodybuilder');
+            $table->date('b_dob')->comment('Date of birth of the bodybuilder');
+            $table->string('b_nrc')->comment('NRC number of the bodybuilder');
+            $table->string('b_image')->nullable()->comment('Image path of the bodybuilder');
+            $table->string('b_address')->comment('Address of the bodybuilder');
+            $table->string('b_certificate')->nullable()->comment('Certificate file path or title');
             $table->timestamps();
         });
     }
