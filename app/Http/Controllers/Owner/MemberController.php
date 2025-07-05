@@ -80,10 +80,13 @@ DB::beginTransaction();
             default => throw new \Exception('Invalid cash type'),
         };
 
+        // Retrieve the purchase amount based on p_id
+        $purchaseAmount = \App\Models\Purchase::where('p_id', $pId)->value('p_amount');
+
         
         // Create Cash record
         $cash = \App\Models\Cash::create([
-            'c_amount' => $request->input('c_amount'),
+            'c_amount' => $purchaseAmount,
             'c_type' => $cashType,
             'c_flag' => $cFlag,
             'c_note' => $request->input('c_note', default: ''),
@@ -91,6 +94,7 @@ DB::beginTransaction();
             'c_date' => now(),
 
         ]);
+
 
         
         // Create Cash Transaction record
