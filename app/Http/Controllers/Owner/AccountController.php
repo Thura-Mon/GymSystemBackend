@@ -13,7 +13,7 @@ class AccountController extends Controller
         $fromtype = $request->input('fromtype');
         $totype = $request->input('totype');
         $tranamount = $request->input('tranamount');
-        $note=$request->input('note');
+        $note=$request->input('note', '');
 
         if (!$fromtype || !$totype || !$tranamount) {
             return response()->json(['message' => 'Input required'], 400);
