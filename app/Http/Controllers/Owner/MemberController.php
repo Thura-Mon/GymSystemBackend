@@ -155,4 +155,63 @@ DB::beginTransaction();
         ]);     
     }
 
+    // Get all members
+    public function getAllMembers(Request $request)
+    {
+        $members = \App\Models\Member::all();
+
+        return response()->json([
+            'members' => $members
+        ]);
+    }
+
+    // Update member details
+    public function updateMember(Request $request){
+        $requestMail = $request->input('m_email');
+        $member = \App\Models\Member::where('m_email', $requestMail)->first();
+        if (!$member) {
+            return response()->json([
+                'error' => 'Member not found.'
+            ], 404);
+        }
+        DB::beginTransaction();
+        try {
+            // Update member details
+            $member->m_name = $request->input('m_name', $member->m_name);
+            $member->m_age = $request->input('m_age', $member->m_age);
+            $member->m_weight = $request->input('m_weight', $member->m_weight);
+            $member->m_height = $request->input('m_height', $member->m_height);
+            $member->m_phone = $request->input('m_phone', $member->m_phone);
+            $member->m_email = $request->input('m_email', $member->m_email);
+            $member->save();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Member updated successfully',
+                'member' => $member
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => 'Error updating member: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+    // Delete Member
+    public function deleteMember(Request $request){
+        $requestMail = $request->input('m_email');
+        $member = \App\Models\Member::where('m_email', $requestMail)->delete();
+        if (!$member) {
+            return response()->json([
+                'error' => 'Member not found.'
+            ], 404);
+        }
+    }
+
+
 }

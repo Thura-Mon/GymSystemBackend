@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Owner\AccountController;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
+use Illuminate\Support\Facades\Mail;
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
@@ -19,6 +21,8 @@ Route::post('/total-active-members', [MemberController::class, 'totalActiveMembe
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
+
+Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
 
 Route::get('/sellers', function () {
 
@@ -38,7 +42,12 @@ Route::get('/', function (Request $request) {
 
 });
 
+Route::get('/verify-otp', function (Request $request) {
 
-
+    $otp = rand(100000, 999999);
+    Mail::to('thuramon086@gmail.com')->send(
+        new \App\Mail\VerifyOTP($otp));
+    return view('emails.verify_otp',['otp' => $otp]);
+    });
 
 

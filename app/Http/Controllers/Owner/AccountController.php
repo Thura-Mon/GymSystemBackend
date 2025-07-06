@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class Account extends Controller
+class AccountController extends Controller
 {
     public function cash_transaction(Request $request)
     {
