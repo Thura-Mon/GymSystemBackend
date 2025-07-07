@@ -187,11 +187,12 @@ DB::beginTransaction();
         try {
             // Update member details
             $member->m_name = $request->input('m_name', $member->m_name);
+            $member->m_phone = $request->input('m_phone', $member->m_phone);
             $member->m_age = $request->input('m_age', $member->m_age);
+            $member->m_email = $request->input('m_email', $member->m_email);
             $member->m_weight = $request->input('m_weight', $member->m_weight);
             $member->m_height = $request->input('m_height', $member->m_height);
-            $member->m_phone = $request->input('m_phone', $member->m_phone);
-            $member->m_email = $request->input('m_email', $member->m_email);
+            
             $member->save();
 
             DB::commit();

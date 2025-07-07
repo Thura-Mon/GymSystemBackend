@@ -17,6 +17,10 @@ Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Re
 
 Route::post('/get-member-lists', [MemberController::class, 'memberAndCash']); // get member and cash
 
+Route::post('/update-member', [MemberController::class, 'updateMember']); // update a member
+
+Route::post('/delete-member', [MemberController::class, 'deleteMember']); // delete a member
+
 Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
 Route::post('/total-active-members', [MemberController::class, 'totalActiveMembers']); // Total active members count
