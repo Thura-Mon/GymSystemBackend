@@ -156,12 +156,21 @@ DB::beginTransaction();
     }
 
     // Get all members
-    public function getAllMembers(Request $request)
+    public function memberAndCash(Request $request)
     {
         $members = \App\Models\Member::all();
+        $cash = \App\Models\Cash::all();
 
         return response()->json([
-            'members' => $members
+            'date' => $cash->pluck('c_date')->toArray(),
+            'name' => $members->pluck('m_name')->toArray(),
+            'phone' => $members->pluck('m_phone')->toArray(),
+            'email' => $members->pluck('m_email')->toArray(),
+            'cash' => $cash->pluck('c_amount')->toArray(),
+            'cash_type' => $cash->pluck('c_type')->toArray(),
+            'age' => $members->pluck('m_age')->toArray(),
+            'weight' => $members->pluck('m_weight')->toArray(),
+            'height' => $members->pluck('m_height')->toArray(),
         ]);
     }
 

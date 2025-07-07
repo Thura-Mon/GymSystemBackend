@@ -15,7 +15,7 @@ Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin A
 
 Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Register a new member
 
-Route::post('/get-members', [MemberController::class, 'getAllMembers']); // Update member details
+Route::post('/get-member-lists', [MemberController::class, 'memberAndCash']); // Update member details
 
 Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
@@ -25,7 +25,6 @@ Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveM
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
-Route::post('/get-cash', [CashController::class, 'getCash']); // Get cash transactions
 
 Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
 
