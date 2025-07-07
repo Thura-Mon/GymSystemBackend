@@ -30,6 +30,8 @@ Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveM
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
+Route::post('view-cash', [CashController::class, 'getCash']); // View CashTransaction
+
 Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
 
 Route::get('/sellers', function () {
