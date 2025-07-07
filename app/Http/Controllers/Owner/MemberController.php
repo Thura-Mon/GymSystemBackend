@@ -162,6 +162,7 @@ DB::beginTransaction();
         $cash = \App\Models\Cash::all();
 
         return response()->json([
+            'id' => $cash->pluck('m_id')->toArray(),
             'date' => $cash->pluck('c_date')->toArray(),
             'name' => $members->pluck('m_name')->toArray(),
             'phone' => $members->pluck('m_phone')->toArray(),
