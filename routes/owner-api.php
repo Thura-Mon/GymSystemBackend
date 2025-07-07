@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
+use App\Http\Controllers\Owner\CashController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,7 @@ Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin A
 
 Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Register a new member
 
-Route::get('/get-members', [MemberController::class, 'getAllMembers']); // Update member details
+Route::post('/get-members', [MemberController::class, 'getAllMembers']); // Update member details
 
 Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
@@ -23,6 +24,8 @@ Route::post('/total-active-members', [MemberController::class, 'totalActiveMembe
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
+
+Route::post('/get-cash', [CashController::class, 'getCash']); // Get cash transactions
 
 Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
 
