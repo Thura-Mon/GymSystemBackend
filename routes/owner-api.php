@@ -15,7 +15,7 @@ Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin A
 
 Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Register a new member
 
-Route::post('/get-member-lists', [MemberController::class, 'memberAndCash']); // Update member details
+Route::post('/get-member-lists', [MemberController::class, 'memberAndCash']); // get member and cash
 
 Route::post('/total-members', [MemberController::class, 'totalMembers']); // Total members count
 
