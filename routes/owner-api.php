@@ -10,6 +10,7 @@ use App\Http\Controllers\Owner\CashController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Console\Input\Input;
 
 Route::post('/login',[AuthController::class, 'login'])->middleware(); // Admin Authentication
 
@@ -29,13 +30,10 @@ Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveM
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
-
 Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
 
 Route::get('/sellers', function () {
-
     $sellers = \App\Models\Seller::first();
-
     return response()->json([
         'sellers' => $sellers->name
     ]);
@@ -51,9 +49,9 @@ Route::get('/', function (Request $request) {
 });
 
 Route::get('/verify-otp', function (Request $request) {
-
+    $email = $request->input("m_email");
     $otp = rand(100000, 999999);
-    Mail::to('thuramon086@gmail.com')->send(
+    Mail::to($email)->send(
         new \App\Mail\VerifyOTP($otp));
     return view('emails.verify_otp',['otp' => $otp]);
     });
