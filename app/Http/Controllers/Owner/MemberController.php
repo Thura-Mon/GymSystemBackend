@@ -176,8 +176,8 @@ DB::beginTransaction();
 
     // Update member details
     public function updateMember(Request $request){
-        $id = $request->input('m_id');
-        $member = \App\Models\Member::where('m_id', $id)->first();
+        $requestMail = $request->input('m_email');
+        $member = \App\Models\Member::where('m_email', $requestMail)->first();
         if (!$member) {
             return response()->json([
                 'error' => 'Member not found.'
