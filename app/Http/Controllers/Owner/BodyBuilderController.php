@@ -15,8 +15,8 @@ class BodyBuilderController extends Controller
         $b_dob = $request->input('b_dob');
         $b_nrc= $request->input('b_nrc');
         $b_address = $request->input('b_address');
-        $b_image = $request->input('b_image');
-        $b_certificate = $request->input('b_certificate');
+        $b_image = $request->input('b_image', '');
+        $b_certificate = $request->input('b_certificate', '');
 
         if (!$b_name || !$b_description || !$b_phone || !$b_image || !$b_certificate) {
             return response()->json(['message' => 'Input required'], 400);
