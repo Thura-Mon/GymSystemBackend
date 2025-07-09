@@ -32,6 +32,8 @@ Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveM
 
 Route::post('add-body-builder', [BodyBuilderController::class, 'insertbodybuilder']); // Add Body Builder
 
+Route::post('/get-body-builder', [BodyBuilderController::class, 'getbodybuilder']); // Retrieve / Get body builder
+
 Route::post('/delete-body-builder', [BodyBuilderController::class, 'deletebodybuilder']); // Delete Body Builder
 
 Route::post('/update-body-builder', [BodyBuilderController::class, 'updatebodybuilder']); // Update Body Builder

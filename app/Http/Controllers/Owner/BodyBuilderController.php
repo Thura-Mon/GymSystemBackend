@@ -103,4 +103,24 @@ class BodyBuilderController extends Controller
 
         return response()->json(['message' => 'Bodybuilder updated successfully'], 200);
     }
+
+    // Retrieve / Get bodybuilder
+    public function getbodybuilder(Request $request){
+         $bodyBuilder = \App\Models\BodyBuilder::all();
+    
+
+        return response()->json([
+            'id' => $bodyBuilder->pluck('b_id')->toArray(),
+            'name' => $bodyBuilder->pluck('b_name')->toArray(),
+            'description' => $bodyBuilder->pluck('b_description')->toArray(),
+            'phone' => $bodyBuilder->pluck('b_phone')->toArray(),
+            'dob' => $bodyBuilder->pluck('b_dob'),
+            'nrc' => $bodyBuilder->pluck('b_nrc')->toArray(),
+            'image' => $bodyBuilder->pluck('b_image')->toArray(),
+            'address' => $bodyBuilder->pluck('b_address')->toArray(),
+            'certificate' => $bodyBuilder->pluck(('b_certificate'))->toArray()
+        ]);
+    }
 }
+
+
