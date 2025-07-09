@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\AuthController;
+use App\Http\Controllers\Owner\BodyBuilderController;
 use App\Http\Controllers\Owner\CashController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
+use App\Models\BodyBuilder;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Console\Input\Input;
 
@@ -27,6 +29,12 @@ Route::post('/total-members', [MemberController::class, 'totalMembers']); // Tot
 Route::post('/total-active-members', [MemberController::class, 'totalActiveMembers']); // Total active members count
 
 Route::post('/total-inactive-members', [MemberController::class, 'totalInactiveMembers']); // Total inactive members count
+
+Route::post('add-body-builder', [BodyBuilderController::class, 'insertbodybuilder']); // Add Body Builder
+
+Route::post('/delete-body-builder', [BodyBuilderController::class, 'deletebodybuilder']); // Delete Body Builder
+
+Route::post('/update-body-builder', [BodyBuilderController::class, 'updatebodybuilder']); // Update Body Builder
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
