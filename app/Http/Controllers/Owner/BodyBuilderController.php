@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Owner;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class BodyBuilderController extends Controller
 {
@@ -69,39 +70,39 @@ class BodyBuilderController extends Controller
 
     public function updatebodybuilder(Request $request)
     {
+        $id = $request->input('b_id');
+        $trainer = \App\Models\Member::where('b_id', $id)->first();
+        if (!$trainer) {
+            return response()->json([
+                'error' => 'trainer not found.'
+            ], 404);
+        }
+         DB::beginTransaction();
+        try {
     
-        $b_name = $request->input('b_name');
-        $b_phone = $request->input('b_phone');
-        $b_description = $request->input('b_description');
-        $b_dob = $request->input('b_dob');
-        $b_nrc= $request->input('b_nrc');
-        $b_address = $request->input('b_address');
-        $b_image = $request->input('b_image');
-        $b_cretificate = $request->input('b_certificate');
+        $trainer->b_name = $request->input('b_name', $trainer->b_name);
+        $trainer->b_phone = $request->input('b_phone',$trainer->b_phone);
+        $trainer->b_description = $request->input('b_description', $trainer->b_description);
+        $trainer->b_dob = $request->input('b_dob', $trainer->b_dob);
+        $trainer->b_nrc = $request->input('b_nrc', $trainer->b_nrc);
+        $trainer->b_address = $request->input('b_address', $trainer->b_address);
+        $trainer->b_image = $request->input('b_image', $trainer->b_image);
+        $trainer->b_cretificate = $request->input('b_certificate', $trainer->b_cretificate);
 
-        if (!$b_name || !$b_description || !$b_phone || !$b_image || !$b_cretificate) {
-            return response()->json(['message' => 'Input required'], 400);
+         $trainer->save();
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Body Builder updated successfully',
+                'Trainer' => $trainer
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => 'Error updating body builder: ' . $e->getMessage()
+            ], 500);
         }
-
-        $bodybuilder = \App\Models\BodyBuilder::find($b_nrc);
-
-        if (!$bodybuilder) {
-            return response()->json(['message' => 'Bodybuilder not found'], 404);
-        }
-
-        // Update the bodybuilder
-        $bodybuilder->update([
-            'b_name' => $b_name,
-            'b_phone' => $b_phone,
-            'b_description' => $b_description,
-            'b_dob' => $b_dob,
-            'b_nrc' => $b_nrc,
-            'b_address' => $b_address,
-            'b_image' => $b_image,
-            'b_cretificate' => $b_cretificate,
-        ]);
-
-        return response()->json(['message' => 'Bodybuilder updated successfully'], 200);
     }
 
     // Retrieve / Get bodybuilder
