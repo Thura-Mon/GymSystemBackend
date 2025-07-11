@@ -10,7 +10,7 @@ class AccountController extends Controller
 {
     public function cash_transaction(Request $request)
     {
-        $date = $request->input('i_date');
+        $date = $request->input('i_date', Carbon::now());
         $fromtype = $request->input('fromtype');
         $totype = $request->input('totype');
         $tranamount = $request->input('amount');
@@ -42,7 +42,7 @@ class AccountController extends Controller
             'ct_total' => $updatedToTotal,
         ]);
         \App\Models\CashTransactionInformation::create([
-            'i_date' => Carbon::now(),
+            'i_date' => $date,
             'fromtype' => $fromtype, // Negative for deduction
             'totype' => $totype, 
             'amount' => $tranamount,
