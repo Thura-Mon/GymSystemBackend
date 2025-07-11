@@ -85,7 +85,7 @@ class BodyBuilderController extends Controller
         $trainer->b_nrc = $request->input('b_nrc', $trainer->b_nrc);
         $trainer->b_address = $request->input('b_address', $trainer->b_address);
         $trainer->b_image = $request->input('b_image', $trainer->b_image);
-        $trainer->b_cretificate = $request->input('b_certificate', $trainer->b_cretificate);
+        $trainer->b_certificate = $request->input('b_certificate', $trainer->b_certificate);
 
          $trainer->save();
 
