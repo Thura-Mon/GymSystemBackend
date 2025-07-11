@@ -69,7 +69,7 @@ class BodyBuilderController extends Controller
     public function updatebodybuilder(Request $request)
     {
         $id = $request->input('b_id');
-        $trainer = \App\Models\BodyBuilder::where('b_id', $id)->get();
+        $trainer = \App\Models\BodyBuilder::where('b_id', $id)->first();
         if (!$trainer) {
             return response()->json([
                 'error' => 'trainer not found.'
