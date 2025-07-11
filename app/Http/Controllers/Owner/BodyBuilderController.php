@@ -63,15 +63,13 @@ class BodyBuilderController extends Controller
     }
 
 
-
-
     
     # Update bodybuilder's all data check with b_id
 
     public function updatebodybuilder(Request $request)
     {
         $id = $request->input('b_id');
-        $trainer = \App\Models\Member::where('b_id', $id)->first();
+        $trainer = \App\Models\Member::where('b_id', $id)->get();
         if (!$trainer) {
             return response()->json([
                 'error' => 'trainer not found.'
