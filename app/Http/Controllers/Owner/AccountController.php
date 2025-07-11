@@ -10,12 +10,13 @@ class AccountController extends Controller
 {
     public function cash_transaction(Request $request)
     {
+        $date = $request->input('i_date');
         $fromtype = $request->input('fromtype');
         $totype = $request->input('totype');
         $tranamount = $request->input('amount');
         $note=$request->input('note', '');
 
-        if (!$fromtype || !$totype || !$tranamount) {
+        if (!$date || !$fromtype || !$totype || !$tranamount) {
             return response()->json(['message' => 'Input required'], 400);
         }
 
