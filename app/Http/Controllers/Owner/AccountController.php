@@ -16,9 +16,9 @@ class AccountController extends Controller
         $tranamount = $request->input('amount');
         $note=$request->input('note', '');
 
-        // if (!$date || !$fromtype || !$totype || !$tranamount) {
-        //     return response()->json(['message' => 'Input required'], 400);
-        // }
+        if (!$date || !$fromtype || !$totype || !$tranamount) {
+            return response()->json(['message' => 'Input required'], 400);
+        }
 
         // Get current totals
         $fromTotal = \App\Models\CashTransaction::where('ct_type', $fromtype)->sum('ct_total');
