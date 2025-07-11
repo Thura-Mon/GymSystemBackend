@@ -12,7 +12,7 @@ class AccountController extends Controller
     {
         $fromtype = $request->input('fromtype');
         $totype = $request->input('totype');
-        $tranamount = $request->input('tranamount');
+        $tranamount = $request->input('amount');
         $note=$request->input('note', '');
 
         if (!$fromtype || !$totype || !$tranamount) {
