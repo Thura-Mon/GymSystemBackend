@@ -68,8 +68,6 @@ class MemberController extends Controller
             'm_reg_date' => $mRegDate,
             'm_expiry_date' => $mExpDate,
         ]);     
-
-        dd($member);
         
 
         // Determine c_flag based on c_type

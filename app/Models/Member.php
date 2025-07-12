@@ -24,7 +24,8 @@ class Member extends Model
         'p_id',
         'c_id',
         'm_amount',
-        'm_expiry_date'
+        'm_expiry_date',
+        'm_reg_date'
     ];
 
     public $timestamps = false;
