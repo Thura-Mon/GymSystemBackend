@@ -55,4 +55,8 @@ class AccountController extends Controller
             'totype_total' => $updatedToTotal
         ], 200);
     }
+
+    public function transaction_info(Request $request){
+        $
+    }
 }

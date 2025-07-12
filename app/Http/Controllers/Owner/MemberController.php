@@ -30,8 +30,7 @@ DB::beginTransaction();
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
             $pId = $request->input('p_id'); // purchaes ID
-            $mRegDateInput = $request->input('m_reg_date');
-            $mRegDate = $mRegDateInput ? Carbon::parse($mRegDateInput) : Carbon::now();
+            $mRegDate = Carbon::now();
             $mExpDate = null;
 
             // Calculate expiry date
