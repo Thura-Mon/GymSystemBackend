@@ -33,8 +33,6 @@ class MemberController extends Controller
             $mRegDate = now();
             $mExpDate = null;
 
-            dd($mRegDate);
-
             // Calculate expiry date
             if($pId == '1'){
                 $mExpDate = $mRegDate->copy()->addDays(37); // 1 month
@@ -55,6 +53,7 @@ class MemberController extends Controller
                 ], 400);
             }
 
+            dd($mRegDate);
 
              // Create Member record
             $member = \App\Models\Member::create([
