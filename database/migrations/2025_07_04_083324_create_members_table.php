@@ -28,7 +28,7 @@ return new class extends Migration
         $table->foreign('p_id')->references('p_id')->on('purchases')
               ->onDelete('cascade')->onUpdate('cascade');
 
-        $table->date('m_reg_date')->default(now());
+        $table->date('m_reg_date');
         $table->date('m_expiry_date');
     
     });
