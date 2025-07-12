@@ -15,10 +15,10 @@ class MemberController extends Controller
     public function addMember(Request $request)
 {
 
-// DB::beginTransaction();
+DB::beginTransaction();
 
 
-//     try {
+    try {
         // Create Member
         
             $mName = $request->input('m_name');
@@ -104,7 +104,7 @@ class MemberController extends Controller
             'ct_total' => $finalTotalAmount
         ]); 
 
-        // DB::commit();
+        DB::commit();
 
         return response()->json([
             'message' => 'Member and Cash record created successfully',
@@ -113,13 +113,13 @@ class MemberController extends Controller
             'total_amount' => $finalTotalAmount,
         ], 201);
 
-    // } catch (\Exception $e) {
+    } catch (\Exception $e) {
 
-    //     return response()->json([
-    //         'message' => 'Error occurred',
-    //         'error' => $e->getMessage()
-    //     ], 500);
-    // }
+        return response()->json([
+            'message' => 'Error occurred',
+            'error' => $e->getMessage()
+        ], 500);
+    }
 }
 
 
