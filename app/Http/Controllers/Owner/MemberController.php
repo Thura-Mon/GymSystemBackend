@@ -53,7 +53,6 @@ class MemberController extends Controller
                 ], 400);
             }
 
-            dd($mRegDate);
 
              // Create Member record
             $member = \App\Models\Member::create([
@@ -69,6 +68,8 @@ class MemberController extends Controller
             'm_reg_date' => $mRegDate,
             'm_expiry_date' => $mExpDate,
         ]);     
+
+        dd($member);
         
 
         // Determine c_flag based on c_type
