@@ -60,12 +60,12 @@ Route::get('/', function (Request $request) {
 
 });
 
-Route::get('/verify-otp', function (Request $request) {
-    $email = $request->input("m_email");
-    $otp = rand(100000, 999999);
-    Mail::to($email)->send(
-        new \App\Mail\VerifyOTP($otp));
-    return view('emails.verify_otp',['otp' => $otp]);
-    });
+// Route::get('/verify-otp', function (Request $request) {
+//     $email = $request->input("m_email");
+//     $otp = rand(100000, 999999);
+//     Mail::to($email)->send(
+//         new \App\Mail\VerifyOTP($otp));
+//     return view('emails.verify_otp',['otp' => $otp]);
+//     });
 
 
