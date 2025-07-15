@@ -42,7 +42,9 @@ Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // 
 
 Route::post('view-cash', [CashController::class, 'getCash']); // View CashTransaction
 
-Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']);
+Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']); // Account Cash Transaction
+
+Route::get('/get-total-transaction', [AccountController::class, 'totalTransaction']); // Get the total Transaction
 
 Route::get('/sellers', function () {
     $sellers = \App\Models\Seller::first();

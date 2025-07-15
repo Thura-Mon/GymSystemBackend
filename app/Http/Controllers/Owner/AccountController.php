@@ -56,7 +56,16 @@ class AccountController extends Controller
         ], 200);
     }
 
-    public function transaction_info(Request $request){
-        $
+    public function totalTransaction(Request $request){
+
+        $totalamount = \App\Models\CashTransaction::sum('ct_total');
+
+        if($totalamount){
+            return response()->json(['Total Amount' => $totalamount]);
+        }
+
+    
+
+        
     }
 }
