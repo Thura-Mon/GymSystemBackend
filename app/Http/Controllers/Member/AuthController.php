@@ -38,7 +38,7 @@ public function login(Request $request)
             'access_token' => $token,
             'token_type' => 'Bearer',
             'email' => $user->m_email,
-        ]);
+        ], 200);
     }
 
     return response()->json(['message' => 'Invalid credentials'], 401);
