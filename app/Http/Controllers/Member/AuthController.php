@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-
-public function login(Request $request)
-{
+    // Member Login
+    public function login(Request $request)
+    {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required'
@@ -44,7 +44,7 @@ public function login(Request $request)
     return response()->json(['message' => 'Invalid credentials'], 401);
 }
 
-
+    // Change Member's Password
     public function changePassword(Request $request){
         $email = $request->input('email');
         $newPassword = $request->input('password');
@@ -64,6 +64,7 @@ public function login(Request $request)
         return response()->json(['message' => 'Password changed successfully']);
     }
 
+    // Verify Member's OTP
     public function verifyOtp(Request $request){
         $email = $request->input('email');
 
@@ -71,9 +72,11 @@ public function login(Request $request)
             return response()->json(['message' => 'Email is required!']);
         }
 
-        $otp = rand(100000, 999999);
+        $otp = rand(1000, 9999);
         Mail::to($email)->send(
         new \App\Mail\VerifyOTP($otp));
         return view('emails.verify_otp',['otp' => $otp]);
     }
+
 }
+
