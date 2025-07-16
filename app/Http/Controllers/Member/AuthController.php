@@ -76,7 +76,7 @@ public function verifyOtp(Request $request)
     }
 
      // Check if the email exists in your users database table
-    $user = Member::where('email', $email)->first();
+    $user = Member::where('m_email', $email)->first();
     if (!$user) {
         return response()->json(['message' => 'Email not found!'], 404);
     }
@@ -102,7 +102,7 @@ public function checkOtp(Request $request)
         return response()->json(['message' => 'Email and OTP are required!'], 400);
     }
 
-    $user = Member::where('email', $email)->first();
+    $user = Member::where('m_email', $email)->first();
     if (!$user) {
         return response()->json(['message' => 'Email not found!'], 404);
     }
