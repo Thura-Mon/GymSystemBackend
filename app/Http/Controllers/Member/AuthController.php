@@ -72,7 +72,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Email is required!']);
         }
 
-        $otp = rand(1000, 9999);
+        $otp = rand(100000, 999999);
         Mail::to($email)->send(
         new \App\Mail\VerifyOTP($otp));
         return view('emails.verify_otp',['otp' => $otp]);
