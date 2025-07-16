@@ -35,11 +35,11 @@ DB::beginTransaction();
 
             // Calculate expiry date
             if($pId == '1'){
-                $mExpDate = $mRegDate->copy()->addDays(37); // 1 month
+                $mExpDate = $mRegDate->copy()->addDays(30); // 1 month
             } elseif($pId == '2') {
-                $mExpDate = $mRegDate->copy()->addDays(74);  // 2 months
+                $mExpDate = $mRegDate->copy()->addDays(60);  // 2 months
             } elseif($pId == '3') {
-                $mExpDate = $mRegDate->copy()->addDays(111);  // 3 months
+                $mExpDate = $mRegDate->copy()->addDays(90);  // 3 months
             } else {
                 return response()->json([
                     'error' => 'Invalid purchase ID.'

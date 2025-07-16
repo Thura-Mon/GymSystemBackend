@@ -45,7 +45,7 @@ Artisan::command('app:create-purchases', function(){
         'p_id' => 3,
         'p_month' => "3",
         'p_amount' => "85000",
-        'p_expiration' => 111,
+        'p_expiration' => 90,
     ]);
     $this->info("Created one purchase's record successfully");
 
