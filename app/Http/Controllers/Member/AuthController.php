@@ -75,6 +75,12 @@ public function verifyOtp(Request $request)
         return response()->json(['message' => 'Email is required!'], 400);
     }
 
+     // Check if the email exists in your users database table
+    $user = Member::where('email', $email)->first();
+    if (!$user) {
+        return response()->json(['message' => 'Email not found!'], 404);
+    }
+
     $otp = rand(100000, 999999);
 
     // Store OTP in cache for 5 minutes
@@ -94,6 +100,11 @@ public function checkOtp(Request $request)
 
     if (!$email || !$otp) {
         return response()->json(['message' => 'Email and OTP are required!'], 400);
+    }
+
+    $user = Member::where('email', $email)->first();
+    if (!$user) {
+        return response()->json(['message' => 'Email not found!'], 404);
     }
 
     $cachedOtp = Cache::get("otp_$email");
