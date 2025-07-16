@@ -1,34 +1,49 @@
 <?php
 
 namespace App\Http\Controllers\Member;
-
-
+use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
+
 class AuthController extends Controller
 {
-    public function viewPassword(Request $request)
-    {
-        $email = $request->input('m_email');
 
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if (!$email) {
-        return response()->json(['message' => 'Email is required'], 400);
-        }
+    $user = Member::where('m_email', $request->email)->first();
 
-        $check = \App\Models\Member::where('m_email', $email)->first();
-
-        if(!$check){
-            return response()->json(['message' => 'Unauthorized Access']);
-        }
-
-        return response()->json(['Email : ' => $email]);
-
+    if (!$user) {
+        return response()->json(['message' => 'Invalid email'], 401);
     }
+
+    $storedPassword = $user->m_password;
+
+    // Handle default password
+    $isDefaultPassword = $storedPassword === '000000' && $request->password === '000000';
+
+    if ($isDefaultPassword || Hash::check($request->password, $storedPassword)) {
+        // Create token for this user
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'email' => $user->m_email,
+        ]);
+    }
+
+    return response()->json(['message' => 'Invalid credentials'], 401);
+}
+
 
     public function changePassword(Request $request){
         $email = $request->input('email');
