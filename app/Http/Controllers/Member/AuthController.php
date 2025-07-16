@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 
 
 class AuthController extends Controller
@@ -65,18 +66,51 @@ class AuthController extends Controller
     }
 
     // Verify Member's OTP
-    public function verifyOtp(Request $request){
-        $email = $request->input('email');
 
-        if(!$email){
-            return response()->json(['message' => 'Email is required!']);
-        }
+public function verifyOtp(Request $request)
+{
+    $email = $request->input('email');
 
-        $otp = rand(100000, 999999);
-        Mail::to($email)->send(
-        new \App\Mail\VerifyOTP($otp));
-        return view('emails.verify_otp',['otp' => $otp]);
+    if (!$email) {
+        return response()->json(['message' => 'Email is required!'], 400);
     }
+
+    $otp = rand(100000, 999999);
+
+    // Store OTP in cache for 5 minutes
+    Cache::put("otp_$email", $otp, now()->addMinutes(5));
+
+    // Send the OTP via email
+    Mail::to($email)->send(new \App\Mail\VerifyOTP($otp));
+
+    return response()->json(['message' => 'OTP sent successfully.'], 200);
+}
+
+
+public function checkOtp(Request $request)
+{
+    $email = $request->input('email');
+    $otp = $request->input('otp');
+
+    if (!$email || !$otp) {
+        return response()->json(['message' => 'Email and OTP are required!'], 400);
+    }
+
+    $cachedOtp = Cache::get("otp_$email");
+
+    if (!$cachedOtp) {
+        return response()->json(['message' => 'OTP expired or not found.'], 400);
+    }
+
+    if ($otp == $cachedOtp) {
+        Cache::forget("otp_$email"); // Invalidate OTP
+        return response()->json(['message' => 'OTP verified successfully.'], 200);
+    } else {
+        return response()->json(['message' => 'Invalid OTP.'], 401);
+    }
+}
+
+
 
 }
 
