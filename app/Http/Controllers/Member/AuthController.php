@@ -110,7 +110,5 @@ public function checkOtp(Request $request)
     }
 }
 
-
-
 }
 
