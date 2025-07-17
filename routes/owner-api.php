@@ -20,7 +20,11 @@ Route::post('/add-members', [MemberController::class, 'addMember']); // Add / Re
 
 Route::post('/get-member-lists', [MemberController::class, 'memberAndCash']); // get member and cash
 
-Route::post('/get-active-members', [MemberController::class, 'getActiveMember']); // Get active members
+Route::post('/get-active-members', [MemberController::class, 'getActiveMember']); // Get Active members
+
+Route::post('/get-inactive-members', [MemberController::class, 'getInactiveMember']); // Get Inactive members
+
+Route::post('/get-expired-members', [MemberController::class, 'getExpiredMember']); // Get Expired members
 
 Route::post('/update-member', [MemberController::class, 'updateMember']); // update a member
 

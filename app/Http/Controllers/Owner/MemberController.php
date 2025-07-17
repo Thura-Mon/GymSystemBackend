@@ -232,6 +232,23 @@ DB::beginTransaction();
         }
     }
 
+    // Get Member with Inactive Status
+     public function getInactiveMember(Request $request)
+    {
+        $members = \App\Models\Member::where('m_flag', 0)->get();
+
+
+        return response()->json([
+            'name' => $members->pluck('m_name')->toArray(),
+            'phone' => $members->pluck('m_phone')->toArray(),
+            'email' => $members->pluck('m_email')->toArray(),
+            'age' => $members->pluck('m_age')->toArray(),
+            'weight' => $members->pluck('m_weight')->toArray(),
+            'height' => $members->pluck('m_height')->toArray(),
+            'date' => $members->pluck('m_reg_date')->toArray(),
+        ]);
+    }
+
 
 // Get Member with Active Status
 
@@ -250,4 +267,20 @@ DB::beginTransaction();
             'date' => $members->pluck('m_reg_date')->toArray(),
         ]);
     }
+
+    public function getExpiredMember(Request $request){
+        $members = \App\Models\Member::where('m_flag', 2)->get();
+
+         return response()->json([
+            'name' => $members->pluck('m_name')->toArray(),
+            'phone' => $members->pluck('m_phone')->toArray(),
+            'email' => $members->pluck('m_email')->toArray(),
+            'age' => $members->pluck('m_age')->toArray(),
+            'weight' => $members->pluck('m_weight')->toArray(),
+            'height' => $members->pluck('m_height')->toArray(),
+            'date' => $members->pluck('m_reg_date')->toArray(),
+        ]);
+
+    }
+
 }
