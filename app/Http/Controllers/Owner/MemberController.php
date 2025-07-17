@@ -237,7 +237,7 @@ DB::beginTransaction();
 
     public function getActiveMember(Request $request)
     {
-        $members = \App\Models\Member::where('m_flag', 1)->first();
+        $members = \App\Models\Member::where('m_flag', 1)->get();
 
 
         return response()->json([
