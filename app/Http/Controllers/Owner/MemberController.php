@@ -237,7 +237,8 @@ DB::beginTransaction();
 
     public function getActiveMember(Request $request)
     {
-        $members = \App\Models\Member::where('m_flag', 1)->all();
+        $members = \App\Models\Member::where('m_flag', 1)->get();
+        $cash = \App\Models\Cash::all();
 
 
         return response()->json([
@@ -247,7 +248,7 @@ DB::beginTransaction();
             'age' => $members->pluck('m_age')->toArray(),
             'weight' => $members->pluck('m_weight')->toArray(),
             'height' => $members->pluck('m_height')->toArray(),
-            'date' => $members->pluck('m_reg_date')->toArray(),
+            'date' => $cash->pluck('c_date')->toArray(),
         ]);
     }
 }
