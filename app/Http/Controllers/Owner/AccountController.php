@@ -53,7 +53,8 @@ class AccountController extends Controller
         return response()->json([
             'message' => 'Transaction successful',
             'fromtype_total' => $updatedFromTotal,
-            'totype_total' => $updatedToTotal
+            'totype_total' => $updatedToTotal,
+            'amount' => $tranamount
         ], 200);
     }
 
