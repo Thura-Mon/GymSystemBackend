@@ -247,7 +247,7 @@ DB::beginTransaction();
             'age' => $members->pluck('m_age')->toArray(),
             'weight' => $members->pluck('m_weight')->toArray(),
             'height' => $members->pluck('m_height')->toArray(),
-            'date' => $members->pluck('m_date')->toArray(),
+            'date' => $members->pluck('m_reg_date')->toArray(),
         ]);
     }
 }
