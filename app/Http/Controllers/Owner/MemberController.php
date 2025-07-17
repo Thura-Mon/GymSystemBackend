@@ -238,7 +238,7 @@ DB::beginTransaction();
     public function getActiveMember(Request $request)
     {
         $members = \App\Models\Member::where('m_flag', 1)->get();
-        $cash = \App\Models\Cash::all();
+        $cash = \App\Models\Cash::where('m_id', $members->m_id)->get();
 
 
         return response()->json([
