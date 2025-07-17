@@ -50,9 +50,9 @@ Route::post('view-cash', [CashController::class, 'getCash']); // View CashTransa
 
 Route::post('/cash-transaction', [AccountController::class, 'cash_transaction']); // Account Cash Transaction
 
-Route::get('/get-total-transaction', [AccountController::class, 'totalTransaction']); // Get the total Transaction
+Route::post('/get-total-transaction', [AccountController::class, 'totalTransaction']); // Get the total Transaction
 
-Route::get('/get-transaction-info', [AccountController::class, 'getTransactionInfo']); // Get Transaction Info
+Route::post('/get-transaction-info', [AccountController::class, 'getTransactionInfo']); // Get Transaction Info
 
 Route::get('/sellers', function () {
     $sellers = \App\Models\Seller::first();
