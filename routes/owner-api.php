@@ -52,6 +52,8 @@ Route::post('/cash-transaction', [AccountController::class, 'cash_transaction'])
 
 Route::get('/get-total-transaction', [AccountController::class, 'totalTransaction']); // Get the total Transaction
 
+Route::get('/get-transaction-info', [AccountController::class, 'getTransactionInfo']); // Get Transaction Info
+
 Route::get('/sellers', function () {
     $sellers = \App\Models\Seller::first();
     return response()->json([

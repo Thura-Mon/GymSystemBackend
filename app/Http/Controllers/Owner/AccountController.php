@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Owner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \App\Models\CashTransactionInformation;
 
 class AccountController extends Controller
 {
@@ -41,7 +42,7 @@ class AccountController extends Controller
         \App\Models\CashTransaction::where('ct_type', $totype)->update([
             'ct_total' => $updatedToTotal,
         ]);
-        \App\Models\CashTransactionInformation::create([
+        CashTransactionInformation::create([
             'i_date' => $date,
             'fromtype' => $fromtype, // Negative for deduction
             'totype' => $totype, 
@@ -63,9 +64,19 @@ class AccountController extends Controller
         if($totalamount){
             return response()->json(['Total Amount' => $totalamount]);
         }
+    }
 
-    
+    public function getTransactionInfo(Request $request){
 
-        
+       $info = CashTransactionInformation::all();
+
+
+        if($info){
+            return response()->json(['INFO' => $info], 200);
+        }
+
+        else{
+            return response()->json(['message' => 'Info Not Found'], 404);
+        }
     }
 }
