@@ -154,6 +154,15 @@ DB::beginTransaction();
         ]);     
     }
 
+    // Total members count with expired status (m_flag = 2)
+    public function totalExpMembers(Request $request)
+    {
+        $totalExpMembers = \App\Models\Member::where('m_flag', 2)->count();
+        return response()->json([
+            'total_inactive_members' => $totalExpMembers
+        ]);     
+    }
+
     // Get all members
     public function memberAndCash(Request $request)
     {
@@ -221,5 +230,18 @@ DB::beginTransaction();
                 'error' => 'Member not found.'
             ], 404);
         }
+    }
+
+
+// Get Member with Active Status
+
+    public function getActiveMember(Request $request)
+    {
+        $members = \App\Models\Member::where('m_flag', 1)->get();
+
+
+        return response()->json([
+            'message' => $members
+        ]);
     }
 }
