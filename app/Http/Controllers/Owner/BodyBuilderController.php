@@ -120,6 +120,17 @@ class BodyBuilderController extends Controller
             'certificate' => $bodyBuilder->pluck(('b_certificate'))->toArray()
         ]);
     }
+
+    public function totalBodyBuilder(Request $request){
+        $body_builder = \App\Models\BodyBuilder::count();
+
+        if($body_builder){
+            return response()->json(['Body Builder' => $body_builder],200);
+        }
+        else{
+            return response()->json(['message' => 'Body Builder Not Found'], 404);
+        }
+    }
 }
 
 
