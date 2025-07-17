@@ -241,7 +241,13 @@ DB::beginTransaction();
 
 
         return response()->json([
-            'message' => $members
+            'name' => $members->pluck('m_name')->toArray(),
+            'phone' => $members->pluck('m_phone')->toArray(),
+            'email' => $members->pluck('m_email')->toArray(),
+            'age' => $members->pluck('m_age')->toArray(),
+            'weight' => $members->pluck('m_weight')->toArray(),
+            'height' => $members->pluck('m_height')->toArray(),
+            'date' => $members->pluck('m_date')->toArray(),
         ]);
     }
 }
