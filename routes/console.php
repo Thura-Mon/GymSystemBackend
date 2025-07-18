@@ -27,7 +27,7 @@ Artisan::command('app:install-super-admin', function () {
 
 
 Artisan::command('app:truncate-sellers', function () {
-    $deletedCount = CashTransactionInformation::truncate();
+    $deletedCount = Seller::truncate();
     $this->info("Sellers table truncated. Deleted records.");
 })->purpose('Truncate the sellers table');
 

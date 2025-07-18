@@ -81,15 +81,17 @@ DB::beginTransaction();
             [
                 'total_days' => $duration,
                 'today_date' => $today_date,
-                'm_image' => 'image1.png'
+                'm_image' => 'image',
+                'm_id' => $member->m_id 
             ]
             );
 
         // BMI Information
         
         $bmi = Bmi::create([
-            'bmi_status' => null,
-            'bmi_result' => null
+            'bmi_status' => 'Normal',
+            'bmi_result' => 25.5,
+            'm_id' => $member->m_id 
         ]
         );
 
