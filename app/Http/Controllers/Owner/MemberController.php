@@ -76,7 +76,7 @@ DB::beginTransaction();
         ]);     
         
         // Member Day Period / Duration
-        $today_date = null;
+        $today_date = Carbon::now();
         $memberDay = MemberDay::create(
             [
                 'total_days' => $duration,
@@ -84,6 +84,8 @@ DB::beginTransaction();
                 'm_image' => null
             ]
             );
+
+        // BMI Information
         
         $bmi = Bmi::create([
             'bmi_status' => null,
