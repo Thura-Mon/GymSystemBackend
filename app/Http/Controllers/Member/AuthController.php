@@ -119,7 +119,7 @@ public function checkOtp(Request $request)
     } else {
         return response()->json(['message' => 'Invalid OTP.'], 401);
     }
-}
+} 
 
 }
 

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Owner;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\Bmi;
+use \App\Models\Member;
+use App\Models\MemberDay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use \App\Models\Member;
-use Carbon\Carbon;
 
 class MemberController extends Controller
 {
@@ -32,14 +34,18 @@ DB::beginTransaction();
             $pId = $request->input('p_id'); // purchaes ID
             $mRegDate = now();
             $mExpDate = null;
+            $duration = '';
 
             // Calculate expiry date
             if($pId == '1'){
                 $mExpDate = $mRegDate->copy()->addDays(30); // 1 month
+                $duration = 30;
             } elseif($pId == '2') {
                 $mExpDate = $mRegDate->copy()->addDays(60);  // 2 months
+                $duration = 60;
             } elseif($pId == '3') {
                 $mExpDate = $mRegDate->copy()->addDays(90);  // 3 months
+                $duration = 90;
             } else {
                 return response()->json([
                     'error' => 'Invalid purchase ID.'
@@ -69,6 +75,23 @@ DB::beginTransaction();
             'm_expiry_date' => $mExpDate,
         ]);     
         
+        // Member Day Period / Duration
+        $today_date = null;
+        $memberDay = MemberDay::create(
+            [
+                'total_days' => $duration,
+                'today_date' => $today_date,
+                'm_image' => null
+            ]
+            );
+        
+        $bmi = Bmi::create([
+            'bmi_status' => null,
+            'bmi_result' => null
+        ]
+        );
+
+
 
         // Determine c_flag based on c_type
         $cashType = $request->input('c_type');

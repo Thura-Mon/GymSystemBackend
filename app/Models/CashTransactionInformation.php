@@ -10,7 +10,7 @@ class CashTransactionInformation extends Model
 
     protected $primaryKey = 'i_id'; // Primary key for the members table
 
-    public $incrementing = true; // Assuming m_id is auto-incrementing
+    public $incrementing = true;
     protected $fillable = [
          // Primary key, auto-incremented
          'i_date',

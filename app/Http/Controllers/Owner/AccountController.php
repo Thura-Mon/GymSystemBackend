@@ -54,7 +54,6 @@ class AccountController extends Controller
             'message' => 'Transaction successful',
             'fromtype_total' => $updatedFromTotal,
             'totype_total' => $updatedToTotal,
-            'amount' => $tranamount
         ], 200);
     }
 
@@ -70,7 +69,6 @@ class AccountController extends Controller
     public function getTransactionInfo(Request $request){
 
        $info = CashTransactionInformation::all();
-
 
         if($info){
             return response()->json(['INFO' => $info], 200);

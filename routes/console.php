@@ -4,6 +4,8 @@ use App\Models\Member;
 use App\Models\Seller;
 use App\Models\Purchase;
 use App\Models\Cash;
+use App\Models\CashTransaction;
+use App\Models\CashTransactionInformation;
 use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Date;
@@ -25,7 +27,7 @@ Artisan::command('app:install-super-admin', function () {
 
 
 Artisan::command('app:truncate-sellers', function () {
-    $deletedCount = Seller::truncate();
+    $deletedCount = CashTransactionInformation::truncate();
     $this->info("Sellers table truncated. Deleted records.");
 })->purpose('Truncate the sellers table');
 
