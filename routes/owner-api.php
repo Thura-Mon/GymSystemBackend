@@ -40,7 +40,9 @@ Route::post('add-body-builder', [BodyBuilderController::class, 'insertbodybuilde
 
 Route::post('/get-body-builder', [BodyBuilderController::class, 'getbodybuilder']); // Retrieve / Get body builder
 
-Route::post('/total-body-builder', [BodyBuilderController::class, 'totalBodyBuilder']);
+Route::post('/total-body-builder', [BodyBuilderController::class, 'totalBodyBuilder']); // Total Body Builder
+
+Route::post('/member-status', [MemberController::class, 'memberstatuslist']); // Lists of member status
 
 Route::post('/delete-body-builder', [BodyBuilderController::class, 'deletebodybuilder']); // Delete Body Builder
 

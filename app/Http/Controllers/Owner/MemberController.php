@@ -310,4 +310,96 @@ DB::beginTransaction();
 
     }
 
+
+    
+    //member status list for dashboard
+
+    public function memberstatuslist(Request $request)
+    {
+        $members = Member::all()->map(function($member) {
+
+            if ($member->m_flag == 1) {
+                $member->status = 'active';
+            } elseif ($member->m_flag == 0) {
+                $member->status = 'inactive';
+            } elseif ($member->m_flag == 2) {
+                $member->status = 'expired';
+            }
+            return $member;
+            });
+    
+        return response()->json(data: ['members' => $members], status: 200);
+    }
+
+    // Get member information by email
+
+    public function getMemberInformationByEmail(Request $request)
+{
+    $m_email = $request->input('m_email');
+
+    if (!$m_email) {
+        return response()->json(['message' => 'Email required'], 400);
+    }
+
+    // Only accept Gmail addresses
+    if (!str_ends_with(strtolower($m_email), '@gmail.com')) {
+        return response()->json(['message' => 'Only Gmail addresses are allowed'], 400);
+    }
+
+    $member = Member::where('m_email', $m_email)->first();
+
+    if (!$member) {
+        return response()->json(['message' => 'Member not found'], 404);
+    }
+
+    $memberInfo = $member->toArray();
+
+    switch ((int)($member->p_id ?? 0)) {
+        case 1:
+            $memberInfo['member_type'] = 'Normal Member';
+            break;
+        case 2:
+            $memberInfo['member_type'] = 'Preminum Member';
+            break;
+        case 3:
+            $memberInfo['member_type'] = 'Super Preminum Member';
+            break;
+        default:
+            $memberInfo['member_type'] = 'Unknown';
+            break;
+    }
+
+    return response()->json(['member' => $memberInfo], 200);
+}
+
+
+    // check password by email for member information update
+
+    public function CheckPasswordforInformationUpdate(Request $request)
+    {
+        $m_email = $request->input('m_email');
+        $m_password = $request->input('m_password');
+        if (!$m_email || !$m_password) {
+            return response()->json(['message' => 'Input Require'], 400);
+        }
+
+        $member = Member::where('m_email', $m_email)->first();
+
+        if (!$member) {
+            return response()->json(['message' => 'Member not found'], 404);
+        }
+
+        // Hash Check
+
+        // if (!Hash::check($m_password, $member->m_password)) {
+        //     return response()->json(['message' => 'Incorrect password'], 401);
+        // }
+
+        if( $m_password==$member->m_password) {
+            return response()->json(['message' => 'Incorrect password'], 401);
+        }
+
+        return response()->json(['message' => 'Update info Successful'], 200);
+    }
+
 }
