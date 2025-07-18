@@ -81,7 +81,7 @@ DB::beginTransaction();
             [
                 'total_days' => $duration,
                 'today_date' => $today_date,
-            
+                'm_image' => 'image1.png'
             ]
             );
 
