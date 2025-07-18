@@ -76,12 +76,12 @@ DB::beginTransaction();
         ]);     
         
         // Member Day Period / Duration
-        $today_date = Carbon::now();
+        $today_date = now();
         $memberDay = MemberDay::create(
             [
                 'total_days' => $duration,
                 'today_date' => $today_date,
-                'm_image' => 'Default'
+            
             ]
             );
 
