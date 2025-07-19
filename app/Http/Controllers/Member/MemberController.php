@@ -59,6 +59,7 @@ class MemberController extends Controller
         $memberDays->save();
 
         return response()->json([
+            'status' => true,
             'message' => 'QR check successful'], 200);
         }
 }
