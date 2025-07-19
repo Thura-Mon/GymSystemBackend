@@ -36,10 +36,12 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'email' => $user->m_email,
-        ], 200);
+        'access_token' => $token,
+        'token_type' => 'Bearer',
+        'email' => $user->m_email,
+        'name' => $user->m_name, // <-- Add this
+    ], 200);
+
     }
 
     return response()->json(['message' => 'Invalid credentials'], 401);
