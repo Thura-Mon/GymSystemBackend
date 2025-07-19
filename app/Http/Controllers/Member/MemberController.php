@@ -60,4 +60,21 @@ class MemberController extends Controller
     ], 200);
 }
 
+public function getUser(Request $request){
+    $useremail = request()->input('email');
+    
+    if(!$useremail){
+        return response()->json(['message' => 'Email Not Found']);
+    }
+
+    $getuser = Member::where('m_email', $useremail)->first();
+
+    if(!$useremail){
+        return response()->json(['message' => 'No Member Data']);
+    }
+    return response()->json([
+        'member' => $getuser
+    ]);
+}
+
 }

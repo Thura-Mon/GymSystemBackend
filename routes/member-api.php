@@ -13,3 +13,5 @@ Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 Route::post('/change-password', [AuthController::class, 'changePassword']);
 
 Route::post('/scan-qr', [MemberController::class, 'qrScanner']); // Scan Qr
+
+Route::post('/get-user', [MemberController::class, 'getUser']); // Get User
