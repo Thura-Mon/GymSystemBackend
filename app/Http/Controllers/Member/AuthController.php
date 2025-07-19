@@ -51,7 +51,7 @@ class AuthController extends Controller
         $newPassword = $request->input('password');
 
         if (!$email || !$newPassword) {
-            return response()->json(['message' => 'Email and new password is required'], 400);
+            return response()->json(['message' => 'New password is required'], 400);
         }
         $member = \App\Models\Member::where('m_email', $email)->first();
 

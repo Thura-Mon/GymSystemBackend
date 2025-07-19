@@ -401,5 +401,6 @@ DB::beginTransaction();
 
         return response()->json(['message' => 'Update info Successful'], 200);
     }
+    
 
 }
