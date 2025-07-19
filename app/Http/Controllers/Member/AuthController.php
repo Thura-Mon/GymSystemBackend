@@ -38,8 +38,14 @@ class AuthController extends Controller
         return response()->json([
         'access_token' => $token,
         'token_type' => 'Bearer',
+        'id' => $user->m_id,
         'email' => $user->m_email,
+        'password' => $user->m_password,
         'name' => $user->m_name, // <-- Add this
+        'weight' => $user->m_weight,
+        'height' => $user->m_height,
+        'flag' => $user->m_flag,
+        'purchase' => $user->p_id,
     ], 200);
 
     }

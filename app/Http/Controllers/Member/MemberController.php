@@ -77,4 +77,18 @@ public function getUser(Request $request){
     ]);
 }
 
+// Member Image
+public function memberImage(Request $request){
+        $id = $request->input('id');
+
+        if(!$id){
+            return response()->json(['message' => "Invalid ID"]);
+        }
+        $memberDay = MemberDay::where('m_id', $id)->first();
+        
+        if($memberDay){
+            return response()->json(['message' => $memberDay]);
+        }
+    }
+
 }

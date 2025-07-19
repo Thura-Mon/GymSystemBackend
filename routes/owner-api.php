@@ -11,6 +11,7 @@ use App\Http\Controllers\Owner\CashController;
 use App\Http\Controllers\Owner\MemberController;
 use App\Http\Controllers\Owner\PurchaseController;
 use App\Models\BodyBuilder;
+use App\Models\MemberDay;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Console\Input\Input;
 
