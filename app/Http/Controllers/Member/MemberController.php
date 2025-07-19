@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Models\Member;
 use App\Models\MemberDay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -27,7 +28,7 @@ class MemberController extends Controller
         if (!$qrValue) {
             return response()->json(['message' => 'QR value required'], 400);
         }
-        $member =MemberDay::where('m_email', $qrValue)->first();
+        $member =Member::where('m_email', $qrValue)->first();
 
         if (!$member) {
             return response()->json(['message' => 'Member not found'], 404);
