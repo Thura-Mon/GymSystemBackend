@@ -76,7 +76,7 @@ DB::beginTransaction();
         ]);     
         
         // Member Day Period / Duration
-        $today_date = now();
+        $today_date = '2000-02-22';
         $memberDay = MemberDay::create(
             [
                 'total_days' => $duration,
