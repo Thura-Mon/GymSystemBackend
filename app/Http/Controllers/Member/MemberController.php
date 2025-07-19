@@ -17,10 +17,11 @@ class MemberController extends Controller
         $nowdate = now(); // Get current date in Y-m-d format
         
 
+        $member1 =Member::where('m_email', $qrValue)->first();
         //check input date == today_date from member_days table
-        $memberDays = MemberDay::where('today_date', $nowdate)->first();
+        $memberDays = MemberDay::where('m_id', $member1->m_id)->first();
 
-        if ($memberDays && $memberDays->today_date == Carbon::now()->toDate()) {
+        if ($memberDays && $memberDays->today_date->toDateString() == Carbon::now()->toDateString()) {
             return response()->json(['message' => Carbon::now()->toDateString()], 404);
         }
 
