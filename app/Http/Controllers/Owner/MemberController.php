@@ -76,11 +76,12 @@ DB::beginTransaction();
         ]);     
         
         // Member Day Period / Duration
-        $today_date = '2000-02-22';
+        $today_date = now();
+        $sub = $today_date->subDay();
         $memberDay = MemberDay::create(
             [
                 'total_days' => $duration,
-                'today_date' => $today_date,
+                'today_date' => $sub,
                 'm_image' => 'image',
                 'm_id' => $member->m_id 
             ]
@@ -401,6 +402,5 @@ DB::beginTransaction();
 
         return response()->json(['message' => 'Update info Successful'], 200);
     }
-    
 
 }
