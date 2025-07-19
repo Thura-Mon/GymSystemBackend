@@ -20,7 +20,7 @@ class MemberController extends Controller
         //check input date == today_date from member_days table
         $memberDays = MemberDay::where('today_date', $nowdate)->first();
 
-        if ($memberDays || $memberDays->today_date == Carbon::now()->toDate()) {
+        if ($memberDays && $memberDays->today_date == Carbon::now()->toDate()) {
             return response()->json(['message' => Carbon::now()->toDateString()], 404);
         }
 
