@@ -20,7 +20,7 @@ class MemberController extends Controller
         //check input date == today_date from member_days table
         $memberDays = MemberDay::where('today_date', $nowdate)->first();
 
-        if (!$memberDays) {
+        if ($memberDays->today_date == $nowdate) {
             return response()->json(['message' => 'You have benn attend for today'], 404);
         }
 
