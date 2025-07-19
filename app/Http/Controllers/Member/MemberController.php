@@ -14,14 +14,12 @@ class MemberController extends Controller
     {
         $qrValue = $request->input('qrvalue'); 
         $nowdate = now()->toDateString(); // Get current date in Y-m-d format
-
-        
         
 
         //check input date == today_date from member_days table
         $memberDays = MemberDay::where('today_date', $nowdate)->first();
 
-        if ($memberDays) {
+        if (!$memberDays) {
             return response()->json(['message' => 'You have benn attend for today'], 404);
         }
 
