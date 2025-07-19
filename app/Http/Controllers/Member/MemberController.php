@@ -14,7 +14,7 @@ class MemberController extends Controller
     public function qrScanner(Request $request)
     {
         $qrValue = $request->input('qrvalue'); 
-        $nowdate = now()->toDateString(); // Get current date in Y-m-d format
+        $nowdate = now(); // Get current date in Y-m-d format
         
 
         //check input date == today_date from member_days table
