@@ -20,8 +20,8 @@ class MemberController extends Controller
         //check input date == today_date from member_days table
         $memberDays = MemberDay::where('today_date', $nowdate)->first();
 
-        if ($memberDays && $memberDays->today_date == $nowdate) {
-            return response()->json(['message' => 'You have benn attend for today'], 404);
+        if ($memberDays && $memberDays->today_date == Carbon::now()->toString()) {
+            return response()->json(['message' => 'You have been attend for today'], 404);
         }
 
 
