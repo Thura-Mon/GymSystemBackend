@@ -193,7 +193,6 @@ public function memberImage(Request $request){
 
     if ($memberDay) {
         $newTotalDays = $memberDay->total_days + $daysToAdd;
-
         $memberDay->update([
         'total_days' => $newTotalDays
         ]);
