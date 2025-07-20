@@ -51,4 +51,11 @@ class Member extends Authenticatable
     {
         return 'm_email';
     }
+
+    // Member.php
+public function memberDay()
+{
+    return $this->hasOne(MemberDay::class, 'm_id', 'm_id');
+}
+
 }
