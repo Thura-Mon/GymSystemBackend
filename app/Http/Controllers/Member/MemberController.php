@@ -195,7 +195,7 @@ public function memberImage(Request $request){
 
 
     if($day){
-        $memberDay::update([
+        $memberDay->update([
             'total_days'=>$day->addDays($daysToAdd)
         ]);
     }
