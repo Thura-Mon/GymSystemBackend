@@ -191,9 +191,11 @@ public function memberImage(Request $request){
 
     $day = MemberDay::where('m_id', $mid)->value('total_days');
 
+    $memberDay = MemberDay::where('m_id', $mid)->first();
+
 
     if($day){
-        MemberDay::update([
+        $memberDay::update([
             'total_days'=>$day->addDays($daysToAdd)
         ]);
     }
