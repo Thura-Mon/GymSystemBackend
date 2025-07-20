@@ -237,13 +237,12 @@ public function memberImage(Request $request){
                 $member->save();
                 $expiredMembers[] = $member;
              }
-
-                return response()->json([
+            }
+            return response()->json([
                 'status' => 'success',
                 'inactive_members' => $inactiveMembers,
                 'inactive_members' => $expiredMembers
                 ]);
-            }
         }
 }
 
