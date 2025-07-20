@@ -210,6 +210,7 @@ public function memberImage(Request $request){
     {
         $allMembers = Member::with(['memberDay'])->get();
         $inactiveMembers = [];
+        $expiredMembers = [];
 
         foreach ($allMembers as $member) {
             $memberDay = $member->memberDay;
@@ -229,13 +230,26 @@ public function memberImage(Request $request){
                 $member->m_flag = 0;
                 $member->save();
                 $inactiveMembers[] = $member;
+
+                return response()->json([
+                'status' => 'success',
+                'inactive_members' => $inactiveMembers
+        ]);
+            }
+            else if ($now > $expiryDate){
+                $member->m_flag = 2;
+                $member->save();
+                $expiredMembers[] = $member;
+
+                return response()->json([
+                'status' => 'success',
+                'inactive_members' => $expiredMembers
+                ]);
+
             }
         }
 
-        return response()->json([
-            'status' => 'success',
-            'inactive_members' => $inactiveMembers
-        ]);
+        
     }
 }
 
