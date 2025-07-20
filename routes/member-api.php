@@ -21,3 +21,5 @@ Route::post('/get-member-image', [MemberController::class, 'memberImage']); // G
 Route::post('/renew-plan', [MemberController::class, 'renewPlanByUser']); // Plan Renew
 
 Route::post('/get-member-status', [MemberController::class, 'getMemberStatus']); // Inactive Member
+
+Route::post('/profile-info', [MemberController::class, 'profileInfo']); // Profile Information

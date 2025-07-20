@@ -250,5 +250,35 @@ public function memberImage(Request $request){
     ]);
 }
 
+// User Profile Information
+public function profileInfo(Request $request){
+    $email = $request->input('email');
+    $id = $request->input('id');
+
+    if(!$email || !$id){
+        return response()->json(['message' => 'Invalid Email Or ID']);
+    }
+
+    $member = Member::where('m_email', $email)->first();
+    if(!$member){
+        return response()->json(['message' => 'Member Not Found']);
+    }
+
+    $memberDay = MemberDay::where('m_id', $id)->first();
+    if(!$memberDay){
+        return response()->json(['message' => 'MemberDay Data is not found']);
+    }
+
+    return response()->json([
+        'weight' => $member->m_weight,
+        'height' => $member->m_height,
+        'phone' => $member->m_phone,
+        'started Date' => $member->m_reg_date,
+        'Expired Date' => $member->m_expiry_date,
+        'left days' => $memberDay->total_days,
+    ]);
+
+
+}
 }
 
