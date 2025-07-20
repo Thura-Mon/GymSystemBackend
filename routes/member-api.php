@@ -17,3 +17,5 @@ Route::post('/scan-qr', [MemberController::class, 'qrScanner']); // Scan Qr
 Route::post('/get-user', [MemberController::class, 'getUser']); // Get User
 
 Route::post('/get-member-image', [MemberController::class, 'memberImage']); // Get uploaded Image
+
+Route::post('/renew-plan', [MemberController::class, 'renewPlanByUser']); // Plan Renew

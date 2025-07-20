@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Models\Cash;
 use App\Models\Member;
 use App\Models\MemberDay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\CashTransaction;
 use App\Http\Controllers\Controller;
 
 class MemberController extends Controller
@@ -90,5 +92,102 @@ public function memberImage(Request $request){
             return response()->json(['message' => $memberDay]);
         }
     }
+
+    // Renew plan By user
+
+    public function renewPlanByUser(Request $request)
+    {
+    // Validate inputs
+    $validated = $request->validate([
+        'm_email'   => 'required|email',
+        'p_id'      => 'required|integer',
+        'c_type'    => 'required|string',
+        'c_amount'  => 'required'
+    ]);
+
+    // Clean and convert c_amount to integer
+    $c_amount_raw = $validated['c_amount'];
+    $c_amount = intval(preg_replace('/[^0-9]/', '', $c_amount_raw));
+
+    // Re-check if c_amount is now valid
+    if ($c_amount <= 0) {
+        return response()->json(['message' => 'Invalid cash amount'], 400);
+    }
+
+    // Retrieve member by email
+    $member = Member::where('m_email', $validated['m_email'])->first();
+    if (!$member) {
+        return response()->json(['message' => 'Member not found'], 404);
+    }
+
+    // Retrieve cash type info
+    $type = CashTransaction::where('ct_type', $validated['c_type'])->first();
+    if (!$type) {
+        return response()->json(['message' => 'Invalid cash type'], 400);
+    }
+
+    $plan = \App\Models\purchase::where('p_id', $validated['p_id'])->first();
+    if (!$plan) {
+        return response()->json(['message' => 'Invalid plan ID'], 400);
+    }
+    // Insert into cashes table
+    $cash = Cash::create([
+        'c_amount'  => $c_amount,
+        'c_type'    => $validated['c_type'],
+        'c_flag'    => $type->c_flag,
+        'c_note'    => 'Renew month ( '.$plan->p_month.' ) with amount'.$plan->p_amount.' for member: ' . $member->m_name,
+        'c_date'    => Carbon::now()->toDateString(),
+        'm_id'      => $member->m_id,
+        
+    ]);
+
+    // Update member's plan ID
+    $member->p_id = $validated['p_id'];
+
+    // If m_reg_date is today or in the future, set m_reg_date to today
+
+    $today = Carbon::now()->toDateString();
+    if (Carbon::parse($member->m_reg_date)->gte(Carbon::now()->startOfDay())) {
+        $member->m_reg_date = $today;
+    }
+
+    // Extend expiry date based on plan
+    switch ((int)$validated['p_id']) {
+        case 1:
+            $daysToAdd = 30;
+            break;
+        case 2:
+            $daysToAdd = 60;
+            break;
+        case 3:
+            $daysToAdd = 90;
+            break;
+        default:
+            $daysToAdd = 0;
+            break;
+    }
+
+    if ($daysToAdd > 0) {
+        $currentExpiry = $member->m_expiry_date ? Carbon::parse($member->m_expiry_date) : Carbon::now();
+        $member->m_reg_date = Carbon::now(); // Set reg_date to current expiry date
+        $member->m_expiry_date = $currentExpiry->copy()->addDays($daysToAdd)->toDateString();
+    }
+
+    $member->save();
+    
+    // $member->p_id = $validated['p_id'];
+    // $member->save();
+
+    // Update total in cash_transactions
+    $currentAmount = $type->ct_total;
+    $newAmount = $currentAmount + $c_amount;
+
+    $type->update(['ct_total' => $newAmount]);
+
+    return response()->json([
+        'message' => 'Plan renewed successfully',
+        'cash_id' => $cash->c_id
+    ], 200);
+}
 
 }
