@@ -187,18 +187,17 @@ public function memberImage(Request $request){
 
     // update total_days of MemberDay
 
-    $mid = Member::where('m_email',$validated['m_email'])->value('m_id');
-
-    $day = MemberDay::where('m_id', $mid)->value('total_days');
+    $mid = Member::where('m_email', $validated['m_email'])->value('m_id');
 
     $memberDay = MemberDay::where('m_id', $mid)->first();
 
+    if ($memberDay) {
+        $newTotalDays = $memberDay->total_days + $daysToAdd;
 
-    if($day){
         $memberDay->update([
-            'total_days'=>$day->addDays($daysToAdd)
+        'total_days' => $newTotalDays
         ]);
-    }
+}
 
     return response()->json([
         'message' => 'Plan renewed successfully',
