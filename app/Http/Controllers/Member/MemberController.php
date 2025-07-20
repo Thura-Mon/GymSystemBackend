@@ -189,6 +189,18 @@ public function memberImage(Request $request){
         'message' => 'Plan renewed successfully',
         'cash_id' => $cash->c_id
     ], 200);
+
+    $mid = Member::where('m_email',$validated['m_email'])->value('m_id');
+
+    $day = MemberDay::where('m_id', $mid)->value('today_days');
+
+
+    if($checkmid){
+        MemberDay::update([
+            'today_days'=>$day->addDays($daysToAdd)
+        ]);
+        return response()->json(['message' => 'Successfully']);
+    }
 }
 
 }
