@@ -213,33 +213,35 @@ public function memberImage(Request $request){
     $expiredMembers = [];
 
     foreach ($allMembers as $member) {
-        $memberDay = $member->memberDay;
+    $memberDay = $member->memberDay;
 
-        if (!$memberDay) {
-            continue;
-        }
-
-        $expiryDate = Carbon::parse($member->m_expiry_date);
-        $now = Carbon::now();
-
-        // Calculate days difference (expiry date - now)
-        $daysSinceExpiry = $now->diffInDays($expiryDate, false); 
-        $totalDays = $memberDay->total_days;
-        $sub = $totalDays - $daysSinceExpiry;
-
-        if ($daysSinceExpiry <= 15 && $sub >= 10 && $daysSinceExpiry < $totalDays) {
-            // Member is inactive but not expired
-            $member->m_flag = 0;
-            $member->save();
-            $inactiveMembers[] = $member;
-
-        } elseif ($now->greaterThan($expiryDate)) {
-            // Member is expired
-            $member->m_flag = 2;
-            $member->save();
-            $expiredMembers[] = $member;
-        }
+    if (!$memberDay) {
+        continue;
     }
+
+    $expiryDate = Carbon::parse($member->m_expiry_date);
+    $now = Carbon::now();
+
+    // First check if expired
+    if ($now->greaterThan($expiryDate)) {
+        $member->m_flag = 2;
+        $member->save();
+        $expiredMembers[] = $member;
+        continue;  // no need to check further
+    }
+
+    // If not expired, check if inactive
+    $daysSinceExpiry = $now->diffInDays($expiryDate, false);
+    $totalDays = $memberDay->total_days;
+    $sub = $totalDays - $daysSinceExpiry;
+
+    if ($daysSinceExpiry <= 15 && $sub >= 10 && $daysSinceExpiry < $totalDays) {
+        $member->m_flag = 0;
+        $member->save();
+        $inactiveMembers[] = $member;
+    }
+}
+
 
     return response()->json([
         'status' => 'success',
