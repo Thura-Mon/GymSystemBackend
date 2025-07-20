@@ -226,7 +226,7 @@ public function memberImage(Request $request){
             $totalDays = $memberDay->total_days;
             $sub = $totalDays - $daysSinceExpiry;
 
-            if ($daysSinceExpiry <= 15 && $sub >= 10 && $daysSinceExpiry < $totalDays) {
+            if ($daysSinceExpiry <= 15 && $sub >= 10 && $daysSinceExpiry < $totalDays && !$now > $expiryDate) {
                 $member->m_flag = 0;
                 $member->save();
                 $inactiveMembers[] = $member;
