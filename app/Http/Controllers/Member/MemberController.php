@@ -208,7 +208,7 @@ public function memberImage(Request $request){
     // Get Inactive Member
     public function getInactiveMembers()
     {
-        $allMembers = Member::with(['memberDay'])->get();
+        $allMembers = Member::with(['MemberDay'])->get();
         $inactiveMembers = [];
 
         foreach ($allMembers as $member) {
