@@ -231,25 +231,19 @@ public function memberImage(Request $request){
                 $member->save();
                 $inactiveMembers[] = $member;
 
-                return response()->json([
-                'status' => 'success',
-                'inactive_members' => $inactiveMembers
-        ]);
             }
              if ($now > $expiryDate){
                 $member->m_flag = 2;
                 $member->save();
                 $expiredMembers[] = $member;
+             }
 
                 return response()->json([
                 'status' => 'success',
+                'inactive_members' => $inactiveMembers,
                 'inactive_members' => $expiredMembers
                 ]);
-
             }
         }
-
-        
-    }
 }
 
