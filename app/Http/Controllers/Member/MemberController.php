@@ -206,7 +206,7 @@ public function memberImage(Request $request){
 
 
     // Get Inactive Member
-    public function getInactiveMembers()
+    public function getMemberStatus()
     {
         $allMembers = Member::with(['memberDay'])->get();
         $inactiveMembers = [];
@@ -236,7 +236,7 @@ public function memberImage(Request $request){
                 'inactive_members' => $inactiveMembers
         ]);
             }
-            else if ($now > $expiryDate){
+             if ($now > $expiryDate){
                 $member->m_flag = 2;
                 $member->save();
                 $expiredMembers[] = $member;
