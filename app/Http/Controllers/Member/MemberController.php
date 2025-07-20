@@ -185,16 +185,16 @@ public function memberImage(Request $request){
 
     $type->update(['ct_total' => $newAmount]);
 
-    // update today_days of MemberDay
+    // update total_days of MemberDay
 
     $mid = Member::where('m_email',$validated['m_email'])->value('m_id');
 
-    $day = MemberDay::where('m_id', $mid)->value('today_days');
+    $day = MemberDay::where('m_id', $mid)->value('total_days');
 
 
     if($day){
         MemberDay::update([
-            'today_days'=>$day->addDays($daysToAdd)
+            'total_days'=>$day->addDays($daysToAdd)
         ]);
     }
 
