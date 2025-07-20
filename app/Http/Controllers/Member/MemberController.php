@@ -185,22 +185,25 @@ public function memberImage(Request $request){
 
     $type->update(['ct_total' => $newAmount]);
 
-    return response()->json([
-        'message' => 'Plan renewed successfully',
-        'cash_id' => $cash->c_id
-    ], 200);
+    // update today_days of MemberDay
 
     $mid = Member::where('m_email',$validated['m_email'])->value('m_id');
 
     $day = MemberDay::where('m_id', $mid)->value('today_days');
 
 
-    if($checkmid){
+    if($day){
         MemberDay::update([
             'today_days'=>$day->addDays($daysToAdd)
         ]);
-        return response()->json(['message' => 'Successfully']);
     }
+
+    return response()->json([
+        'message' => 'Plan renewed successfully',
+        'cash_id' => $cash->c_id
+    ], 200);
+
+    
 }
 
 }
