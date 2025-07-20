@@ -201,9 +201,40 @@ public function memberImage(Request $request){
     return response()->json([
         'message' => 'Plan renewed successfully',
         'cash_id' => $cash->c_id
-    ], 200);
-
-    
+    ], 200);   
 }
 
+
+    // Get Inactive Member
+    public function getInactiveMembers()
+    {
+        $allMembers = Member::with(['memberDay'])->get();
+        $inactiveMembers = [];
+
+        foreach ($allMembers as $member) {
+            $memberDay = $member->memberDay;
+
+            if (!$memberDay) {
+                continue;
+            }
+
+            $expiryDate = Carbon::parse($member->m_expiry_date);
+            $now = Carbon::now();
+
+            $daysSinceExpiry = $now->diffInDays($expiryDate, false);
+            $totalDays = $memberDay->total_days;
+
+            if ($totalDays < 15 && $daysSinceExpiry < $totalDays) {
+                $member->m_flag = 0;
+                $member->save();
+                $inactiveMembers[] = $member;
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'inactive_members' => $inactiveMembers
+        ]);
+    }
 }
+
