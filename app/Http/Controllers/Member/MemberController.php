@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\CashTransaction;
 use App\Http\Controllers\Controller;
+use App\Models\Purchase;
 
 class MemberController extends Controller
 {
@@ -126,7 +127,7 @@ public function memberImage(Request $request){
         return response()->json(['message' => 'Invalid cash type'], 400);
     }
 
-    $plan = \App\Models\purchase::where('p_id', $validated['p_id'])->first();
+    $plan = Purchase::where('p_id', $validated['p_id'])->first();
     if (!$plan) {
         return response()->json(['message' => 'Invalid plan ID'], 400);
     }
