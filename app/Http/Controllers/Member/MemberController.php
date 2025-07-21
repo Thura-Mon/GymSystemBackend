@@ -301,5 +301,37 @@ public function editProfile(Request $request)
     return response()->json(['message' => 'Profile updated successfully.', 'Member Image' => $member->m_image], 200);
 }
 
+// update profile info
+
+public function updateInfo(Request $request){
+    $id = $request->input('id');
+
+    if(!$id){
+        return response()->json(['message' => 'Invalid ID']);
+    }
+
+    $member = Member::where('m_id', $id)->first();
+
+    $phone = $request->input('phone', $member->m_phone);
+    $name = $request->input('name', $member->m_name);
+    $weight = $request->input('phone', $member->m_weight);
+    $height = $request->input('phone', $member->m_height);
+
+    if($member){
+        return response()->json(
+            [
+                'message' => 'Updated Successfully',
+                'phone' => $phone,
+                'name' => $name,
+                '$weight' => $weight,
+                'height' => $height
+
+            ]
+            );
+    }
+
+
+}
+
 }
 

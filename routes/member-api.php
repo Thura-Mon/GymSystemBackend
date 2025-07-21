@@ -25,6 +25,8 @@ Route::post('/get-member-status', [MemberController::class, 'getMemberStatus']);
 
 Route::post('/profile-info', [MemberController::class, 'profileInfo']); // Profile Information
 
+Route::post('/update-profile-info', [MemberController::class, 'updateInfo']); // Update Profile
+
 Route::post('/upload-profile-image', [MemberController::class, 'editProfile']); // Update Profile Image
 
 Route::post('/create-Bmi', [BMIController::class, 'store']); // create BMI record
