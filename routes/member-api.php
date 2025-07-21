@@ -23,3 +23,5 @@ Route::post('/renew-plan', [MemberController::class, 'renewPlanByUser']); // Pla
 Route::post('/get-member-status', [MemberController::class, 'getMemberStatus']); // Inactive Member
 
 Route::post('/profile-info', [MemberController::class, 'profileInfo']); // Profile Information
+
+Route::post('/upload-profile-image', [MemberController::class, 'editProfile']); // Update Profile Image

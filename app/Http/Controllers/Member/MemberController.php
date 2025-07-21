@@ -277,8 +277,29 @@ public function profileInfo(Request $request){
         'Expired Date' => $member->m_expiry_date,
         'left days' => $memberDay->total_days,
     ]);
-
-
 }
+
+// Edit Member Profile
+public function editProfile(Request $request)
+{
+    $id = $request->input('id');
+    $image = $request->input('image');
+
+    if (!$id || !$image) {
+        return response()->json(['message' => 'ID and Image are required.'], 400);
+    }
+
+    $member = MemberDay::where('m_id', $id)->first();
+
+    if (!$member) {
+        return response()->json(['message' => 'Member not found.'], 404);
+    }
+
+    $member->m_image = $image;
+    $member->save();
+
+    return response()->json(['message' => 'Profile updated successfully.', 'Member Image' => $member->m_image], 200);
+}
+
 }
 
