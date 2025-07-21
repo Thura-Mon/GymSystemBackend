@@ -30,6 +30,8 @@ return new class extends Migration
 
         $table->date('m_reg_date');
         $table->date('m_expiry_date');
+        $table->date('m_NRC');
+        $table->date('m_address');
     
     });
 }

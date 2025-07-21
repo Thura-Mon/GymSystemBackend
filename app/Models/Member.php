@@ -31,6 +31,8 @@ class Member extends Authenticatable
         'm_amount',
         'm_expiry_date',
         'm_reg_date',
+        'm_NRC',
+        'm_address',
     ];
 
     public $timestamps = false;

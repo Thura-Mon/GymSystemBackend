@@ -32,6 +32,8 @@ DB::beginTransaction();
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
             $pId = $request->input('p_id'); // purchaes ID
+            $nrc = $request->input('m_nrc');
+            $address = $request->input('m_address');
             $mRegDate = now();
             $mExpDate = null;
             $duration = '';
@@ -73,7 +75,9 @@ DB::beginTransaction();
             'p_id' => $pId,
             'm_reg_date' => $mRegDate,
             'm_expiry_date' => $mExpDate,
-        ]);     
+            'm_NRC' => $nrc,
+            'm_address' => $address,
+        ]);    
         
         // Member Day Period / Duration
         $today_date = now();
