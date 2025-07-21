@@ -81,7 +81,7 @@ public function getUser(Request $request){
 }
 
 // Member Image
-public function memberImage(Request $request){
+public function getmemberImage(Request $request){
         $id = $request->input('id');
 
         if(!$id){

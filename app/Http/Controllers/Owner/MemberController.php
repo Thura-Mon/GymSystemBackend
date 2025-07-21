@@ -32,7 +32,7 @@ DB::beginTransaction();
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
             $pId = $request->input('p_id'); // purchaes ID
-            $nrc = $request->input('m_nrc');
+            $nrc = $request->input('m_NRC');
             $address = $request->input('m_address');
             $mRegDate = now();
             $mExpDate = null;
@@ -55,9 +55,9 @@ DB::beginTransaction();
             }
             
             // Check if the email already existed
-            if(Member::where('m_email', $mEmail)->exists()){
+            if(Member::where('m_email', $mEmail || 'm_NRC', $nrc)->exists()){
                 return response()->json([
-                    'error' => 'Email Already exists.'
+                    'error' => 'Email Or NRC Already exists.'
                 ], 400);
             }
 
@@ -212,6 +212,8 @@ DB::beginTransaction();
             'age' => $members->pluck('m_age')->toArray(),
             'weight' => $members->pluck('m_weight')->toArray(),
             'height' => $members->pluck('m_height')->toArray(),
+            'nrc' => $members->pluck('m_NRC')->toArray(),
+            'address' => $members->pluck('m_address')->toArray(),
         ]);
     }
 
@@ -233,6 +235,8 @@ DB::beginTransaction();
             $member->m_email = $request->input('m_email', $member->m_email);
             $member->m_weight = $request->input('m_weight', $member->m_weight);
             $member->m_height = $request->input('m_height', $member->m_height);
+            $member->m_nrc = $request->input('m_NRC',$member->m_NRC);
+            $member->m_address = $request->input('m_NRC',$member->m_address);
             
             $member->save();
 
