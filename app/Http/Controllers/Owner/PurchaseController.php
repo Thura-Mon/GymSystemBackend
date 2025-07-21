@@ -42,4 +42,32 @@ class PurchaseController extends Controller
     return response()->json(['message' => 'Package amount updated successfully'], 200);
 }
 
+// Add new purchase plan
+    public function addNewPurchasePlan(Request $request)
+{
+    $p_month = $request->input('p_month');
+    $p_amount = $request->input('p_amount');
+
+    if (!$p_month || !$p_amount) {
+        return response()->json(['message' => 'Month and amount required'], 400);
+    }
+
+    $existingPlan = \App\Models\Purchase::where('p_month', $p_month)->first();
+    if ($existingPlan) {
+        return response()->json(['message' => 'Purchase plan for this month already exists'], 409);
+    }
+
+    
+    $plan = \App\Models\Purchase::create([
+        'p_month' => $p_month,
+        'p_amount' => $p_amount,
+        'p_expiration' => $p_month * 3,
+    ]);
+
+    return response()->json([
+        'message' => 'Purchase plan added successfully',
+        'plan' => $plan
+    ], 201);
+}
+
 }

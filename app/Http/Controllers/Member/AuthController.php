@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 use App\Models\Member;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -130,30 +131,46 @@ public function checkOtp(Request $request)
     }
 } 
 
-// update Password
-public function updatePassword(Request $request)
-{
-    // Step 1: Validate the inputs
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|string',
-        'newPassword' => 'required|string|min:6|confirmed', // expects newPassword_confirmation field
-    ]);
+// Change password by email and password(gmail==>m_email) and update new password
 
-    // Step 2: Find the user
-    $user = Member::where('m_email', $request->email)->first();
+    public function changeUserPasswordAfterLogin(Request $request)
+    {
+        $m_email = $request->input('m_email');
+        $m_oldPassword = $request->input('m_old_password');
+        $m_newPassword = $request->input('m_new_password');
+        $m_newPasswordConfirmation = $request->input('m_new_password_confirmation');
+        if (!$m_email || !$m_oldPassword || !$m_newPassword || !$m_newPasswordConfirmation) {
+            return response()->json(['message' => 'Email, old password, new password, and confirmation required'], 400);
+        }
 
-    if (!$user || !Hash::check($request->password, $user->m_password)) {
-        return response()->json(['error' => 'Invalid email or password.'], 401);
+        $user = Member::where('m_email', $m_email)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Check if current password is hash or plain text
+        $isHashed = Str::startsWith($user->m_password, '$2y$');
+        if ($isHashed) {
+            // Hashed password: use Hash::check
+            if (!Hash::check($m_oldPassword, $user->m_password)) {
+            return response()->json(['message' => 'Old password is incorrect'], 401);
+            }
+        } else {
+            // Plain text password: direct comparison
+            if ($m_oldPassword !== $user->m_password) {
+            return response()->json(['message' => 'Old password is incorrect'], 401);
+            }
+        }
+        // Check if new password and confirmation match
+        if ($m_newPassword !== $m_newPasswordConfirmation) {
+            return response()->json(['message' => 'New password and confirmation do not match'], 400);
+        }
+
+        // Update password
+        $user->m_password = Hash::make($m_newPassword);
+        $user->save();  
+        return response()->json(['message' => 'Password updated successfully'], 200);
+    
     }
-
-    // Step 3: Update the password
-    $user->m_password = Hash::make($request->newPassword);
-    $user->save();
-
-    return response()->json(['message' => 'Password updated successfully.']);
-}
-
-
 }
 
