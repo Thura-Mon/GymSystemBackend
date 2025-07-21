@@ -12,7 +12,7 @@ class BMIController extends Controller
     $validated = $request->validate([
         'm_id' => 'required',
         'bmi_status' => 'required',
-        'bmi_result' => 'required|integer',
+        'bmi_result' => 'required',
     ]);
 
     $bmi = Bmi::create($validated);
