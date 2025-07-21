@@ -303,35 +303,37 @@ public function editProfile(Request $request)
 
 // update profile info
 
-public function updateInfo(Request $request){
+public function updateInfo(Request $request)
+{
     $id = $request->input('id');
 
-    if(!$id){
-        return response()->json(['message' => 'Invalid ID']);
+    if (!$id) {
+        return response()->json(['message' => 'Invalid ID'], 400);
     }
 
     $member = Member::where('m_id', $id)->first();
 
-    $phone = $request->input('phone', $member->m_phone);
-    $name = $request->input('name', $member->m_name);
-    $weight = $request->input('phone', $member->m_weight);
-    $height = $request->input('phone', $member->m_height);
-
-    if($member){
-        return response()->json(
-            [
-                'message' => 'Updated Successfully',
-                'phone' => $phone,
-                'name' => $name,
-                '$weight' => $weight,
-                'height' => $height
-
-            ]
-            );
+    if (!$member) {
+        return response()->json(['message' => 'Member not found'], 404);
     }
 
+    // Update fields if provided, otherwise keep existing values
+    $member->m_phone = $request->input('phone', $member->m_phone);
+    $member->m_name = $request->input('name', $member->m_name);
+    $member->m_weight = $request->input('weight', $member->m_weight);
+    $member->m_height = $request->input('height', $member->m_height);
 
+    $member->save();
+
+    return response()->json([
+        'message' => 'Updated Successfully',
+        'phone' => $member->m_phone,
+        'name' => $member->m_name,
+        'weight' => $member->m_weight,
+        'height' => $member->m_height
+    ]);
 }
+
 
 }
 
