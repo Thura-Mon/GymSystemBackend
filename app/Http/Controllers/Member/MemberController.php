@@ -334,6 +334,33 @@ public function updateInfo(Request $request)
     ]);
 }
 
+// notify member by email
+    public function notifyMemberStatusByEmail(Request $request)
+    {
+        $m_email = $request->input('m_email');
+
+        if (!$m_email) {
+            return response()->json(['message' => 'Email required'], 400);
+        }
+
+        $member = Member::where('m_email', $m_email)->first();
+
+        if (!$member) {
+            return response()->json(['message' => 'Member not found'], 404);
+        }
+
+        if ($member->m_flag == 0) {
+            return response()->json(['message' => 'Inactive member'], 200);
+        }
+        elseif ($member->m_flag == 2) {
+            return response()->json(['message' => 'Expired member'], 200);
+        }
+        else {
+            return response()->json(['message' => 'Active member'], 200);
+        }
+    }
+
+    
 
 }
 

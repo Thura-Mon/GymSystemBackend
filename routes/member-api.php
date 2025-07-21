@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\AuthController;
 use App\Http\Controllers\Member\BMIController;
+use App\Http\Controllers\Member\Builder;
 use App\Http\Controllers\Member\MemberController;
+use App\Models\BodyBuilder;
 
 Route::post('/login', [AuthController::class, 'login'])->middleware();
 
@@ -32,3 +34,11 @@ Route::post('/update-profile-info', [MemberController::class, 'updateInfo']); //
 Route::post('/upload-profile-image', [MemberController::class, 'editProfile']); // Update Profile Image
 
 Route::post('/create-Bmi', [BMIController::class, 'store']); // create BMI record
+
+Route::post('/rate-builder', [Builder::class, 'assignRating']); // Rate with stars
+
+Route::post('/get-all-rating', [Builder::class, 'getRatings']); // Get Rating
+
+Route::post('/rating-button', [Builder::class, 'displayRatingButton']); // Check and display
+
+Route::post('/member-noti', [Builder::class, 'notifyMemberStatusByEmail']); // Notificatiion
