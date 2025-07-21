@@ -54,7 +54,7 @@ class AuthController extends Controller
     return response()->json(['message' => 'Invalid credentials'], 401);
 }
 
-    // Change Member's Password
+    // Change Member's Forgot Password
     public function changePassword(Request $request){
         $email = $request->input('email');
         $newPassword = $request->input('password');
@@ -129,6 +129,31 @@ public function checkOtp(Request $request)
         return response()->json(['message' => 'Invalid OTP.'], 401);
     }
 } 
+
+// update Password
+public function updatePassword(Request $request)
+{
+    // Step 1: Validate the inputs
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+        'newPassword' => 'required|string|min:6|confirmed', // expects newPassword_confirmation field
+    ]);
+
+    // Step 2: Find the user
+    $user = Member::where('m_email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->m_password)) {
+        return response()->json(['error' => 'Invalid email or password.'], 401);
+    }
+
+    // Step 3: Update the password
+    $user->m_password = Hash::make($request->newPassword);
+    $user->save();
+
+    return response()->json(['message' => 'Password updated successfully.']);
+}
+
 
 }
 

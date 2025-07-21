@@ -11,7 +11,9 @@ Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
 
 Route::post('/check-otp', [AuthController::class, 'checkOtp']);
 
-Route::post('/change-password', [AuthController::class, 'changePassword']);
+Route::post('/change-password', [AuthController::class, 'changePassword']); // change forgot password
+
+Route::post('/update-password', [AuthController::class, 'updatePassword']); // Update password
 
 Route::post('/scan-qr', [MemberController::class, 'qrScanner']); // Scan Qr
 
