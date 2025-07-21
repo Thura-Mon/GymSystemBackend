@@ -51,6 +51,8 @@ Route::post('/update-body-builder', [BodyBuilderController::class, 'updatebodybu
 
 Route::post('/purchase-plans', [PurchaseController::class, 'viewPurchase']); // Purchase Plan
 
+Route::post('/add-purchase-plan', [PurchaseController::class, 'addNewPurchasePlan']); // Add new Purchase Plan
+
 Route::get('/update-purchase-plan', [PurchaseController::class, 'updatePlanAmount']); // Update Purchase Plan amount
 
 Route::post('view-cash', [CashController::class, 'getCash']); // View CashTransaction
