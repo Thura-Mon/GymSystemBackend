@@ -23,4 +23,28 @@ class BMIController extends Controller
     ]);
 }
 
+// BMI History
+
+public function bmiHistory(Request $request)
+{
+    $id = $request->input('id');
+
+    if (!$id) {
+        return response()->json(['message' => 'Invalid ID'], 400);
+    }
+
+    $history = Bmi::where('m_id', $id)->first();
+
+    if (!$history) {
+        return response()->json(['message' => 'No History Found'], 404);
+    }
+
+    return response()->json([
+        'bmi_status' => $history->bmi_status,
+        'bmi_result' => $history->bmi_result,
+        'created_at' => $history->created_at,
+    ]);
+}
+
+
 }

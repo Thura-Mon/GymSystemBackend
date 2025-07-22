@@ -35,6 +35,8 @@ Route::post('/upload-profile-image', [MemberController::class, 'editProfile']); 
 
 Route::post('/create-Bmi', [BMIController::class, 'store']); // create BMI record
 
+Route::get('/bmi-history', [BMIController::class, 'bmiHistory']); // BMI History
+
 Route::post('/rate-builder', [Builder::class, 'assignRating']); // Rate with stars
 
 Route::post('/get-all-rating', [Builder::class, 'getRatings']); // Get Rating
