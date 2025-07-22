@@ -13,6 +13,7 @@ class Bmi extends Model
     protected $fillable = [
         'bmi_status',
         'bmi_result',
-        'm_id'
+        'm_id',
+        'created_at'
     ];
 }
