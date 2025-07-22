@@ -31,12 +31,20 @@ DB::beginTransaction();
             $mEmail = $request->input('m_email');
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
-            $pmonth = $request->input('p_month'); // purchaes ID
+            $pmonthRaw = $request->input('p_month');
             $nrc = $request->input('m_NRC');
             $address = $request->input('m_address');
             $mRegDate = now();
             $mExpDate = null;
             $duration = '';
+
+            if (!is_numeric($pmonthRaw) || (int)$pmonthRaw <= 0) {
+    return response()->json([
+        'error' => 'Invalid purchase month value.'
+    ], 400);
+}
+
+            $pmonth = (int) $pmonthRaw;
 
             // Calculate expiry date
             if($pmonth){
