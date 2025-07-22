@@ -31,7 +31,7 @@ DB::beginTransaction();
             $mEmail = $request->input('m_email');
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
-            $pmonth = $request->input('p_month'); // purchaes ID
+            $pmonth = (int) $request->input('p_month');
             $nrc = $request->input('m_NRC');
             $address = $request->input('m_address');
             $mRegDate = now();
