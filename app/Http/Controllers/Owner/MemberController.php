@@ -69,7 +69,7 @@ DB::beginTransaction();
             'm_email' => $mEmail,
             'm_password' => $mPassword, // Hash the password // AutoGenerate password
             'm_flag' => $mFlag,
-            'p_id' => $pId,
+            'p_month' => $pmonth,
             'm_reg_date' => $mRegDate,
             'm_expiry_date' => $mExpDate,
             'm_NRC' => $nrc,
@@ -108,8 +108,8 @@ DB::beginTransaction();
             default => throw new \Exception('Invalid cash type'),
         };
 
-        // Retrieve the purchase amount based on p_id
-        $purchaseAmount = \App\Models\Purchase::where('p_id', $pId)->value('p_amount');
+        // Retrieve the purchase amount based on p_month
+        $purchaseAmount = \App\Models\Purchase::where('p_month', $pmonth)->value('p_amount');
 
         
         // Create Cash record
