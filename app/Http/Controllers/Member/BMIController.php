@@ -33,18 +33,25 @@ public function bmiHistory(Request $request)
         return response()->json(['message' => 'Invalid ID'], 400);
     }
 
-    $history = Bmi::where('m_id', $id)->first();
+    // Get all records where m_id = $id
+    $history = Bmi::where('m_id', $id)->get();
 
-    if (!$history) {
+    if ($history->isEmpty()) {
         return response()->json(['message' => 'No History Found'], 404);
     }
 
+    // Return all records as an array of bmi_status, bmi_result, created_at
     return response()->json([
-        'bmi_status' => $history->bmi_status,
-        'bmi_result' => $history->bmi_result,
-        'created_at' => $history->created_at,
+        'history' => $history->map(function ($record) {
+            return [
+                'bmi_status' => $record->bmi_status,
+                'bmi_result' => $record->bmi_result,
+                'created_at' => $record->created_at,
+            ];
+        })
     ]);
 }
+
 
 
 }
