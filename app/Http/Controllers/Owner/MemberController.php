@@ -31,7 +31,7 @@ DB::beginTransaction();
             $mEmail = $request->input('m_email');
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
-            $pId = $request->input('p_id'); // purchaes ID
+            $pmonth = $request->input('p_month'); // purchaes ID
             $nrc = $request->input('m_NRC');
             $address = $request->input('m_address');
             $mRegDate = now();
@@ -39,21 +39,18 @@ DB::beginTransaction();
             $duration = '';
 
             // Calculate expiry date
-            if($pId == '1'){
-                $mExpDate = $mRegDate->copy()->addDays(30); // 1 month
-                $duration = 30;
-            } elseif($pId == '2') {
-                $mExpDate = $mRegDate->copy()->addDays(60);  // 2 months
-                $duration = 60;
-            } elseif($pId == '3') {
-                $mExpDate = $mRegDate->copy()->addDays(90);  // 3 months
-                $duration = 90;
+            if($pmonth){
+                $mExpDate = $mRegDate->copy()->addMonths($pmonth);
+                $duration = $pmonth*30; 
+
             } else {
                 return response()->json([
                     'error' => 'Invalid purchase ID.'
                 ], 400);
             }
-            
+            //$mExpDate = $mRegDate->copy()->addDays(30); // 1 month
+            //    $duration = 30;
+
             // Check if the email already existed
             if(Member::where('m_email', $mEmail || 'm_NRC', $nrc)->exists()){
                 return response()->json([
