@@ -6,6 +6,7 @@ use App\Http\Controllers\Member\BMIController;
 use App\Http\Controllers\Member\Builder;
 use App\Http\Controllers\Member\MemberController;
 use App\Models\BodyBuilder;
+use App\Models\Member;
 
 Route::post('/login', [AuthController::class, 'login'])->middleware();
 
@@ -43,4 +44,4 @@ Route::post('/get-all-rating', [Builder::class, 'getRatings']); // Get Rating
 
 Route::post('/rating-button', [Builder::class, 'displayRatingButton']); // Check and display
 
-Route::post('/member-noti', [Builder::class, 'notifyMemberStatusByEmail']); // Notificatiion
+Route::post('/member-noti', [MemberController::class, 'notifyMemberStatusByEmail']); // Notificatiion

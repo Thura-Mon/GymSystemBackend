@@ -204,7 +204,6 @@ public function getmemberImage(Request $request){
     ], 200);   
 }
 
-
     // Get Inactive Member
     public function getMemberStatus()
 {
@@ -283,13 +282,13 @@ public function profileInfo(Request $request){
 public function editProfile(Request $request)
 {
     $id = $request->input('id');
-    $image = $request->input('image');
 
-    if (!$id || !$image) {
-        return response()->json(['message' => 'ID and Image are required.'], 400);
+    if (!$id) {
+        return response()->json(['message' => 'ID is required.'], 400);
     }
 
     $member = MemberDay::where('m_id', $id)->first();
+    $image = $request->input('image', $member->m_image);
 
     if (!$member) {
         return response()->json(['message' => 'Member not found.'], 404);
@@ -359,8 +358,5 @@ public function updateInfo(Request $request)
             return response()->json(['message' => 'Active member'], 200);
         }
     }
-
-    
-
 }
 
