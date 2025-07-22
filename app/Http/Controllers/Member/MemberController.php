@@ -101,7 +101,7 @@ public function getmemberImage(Request $request){
     // Validate inputs
     $validated = $request->validate([
         'm_email'   => 'required|email',
-        'p_month'      => 'required|integer',
+        'p_id'      => 'required|integer',
         'c_type'    => 'required|string',
         'c_amount'  => 'required'
     ]);
@@ -127,7 +127,7 @@ public function getmemberImage(Request $request){
         return response()->json(['message' => 'Invalid cash type'], 400);
     }
 
-    $plan = Purchase::where('p_month', $validated['p_month'])->first();
+    $plan = Purchase::where('p_id', $validated['p_id'])->first();
     if (!$plan) {
         return response()->json(['message' => 'Invalid plan ID'], 400);
     }
@@ -153,7 +153,7 @@ public function getmemberImage(Request $request){
     }
 
     // Extend expiry date based on plan
-    switch ((int)$validated['p_month']) {
+    switch ((int)$validated['p_id']) {
         case 1:
             $daysToAdd = 30;
             break;
@@ -162,33 +162,6 @@ public function getmemberImage(Request $request){
             break;
         case 3:
             $daysToAdd = 90;
-            break;
-        case 4:
-            $daysToAdd = 120;
-            break;
-        case 5:
-            $daysToAdd = 150;
-            break;
-        case 6:
-            $daysToAdd = 180;
-            break;
-        case 7:
-            $daysToAdd = 210;
-            break;
-        case 8:
-            $daysToAdd = 240;
-            break;
-        case 9:
-            $daysToAdd = 270;
-            break;
-        case 10:
-            $daysToAdd = 300;
-            break;
-        case 11:
-            $daysToAdd = 330;
-            break;
-        case 12:
-            $daysToAdd = 360;
             break;
         default:
             $daysToAdd = 0;

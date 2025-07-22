@@ -31,27 +31,25 @@ DB::beginTransaction();
             $mEmail = $request->input('m_email');
             $mPassword = $request->input('m_password');
             $mFlag = $request->input('m_flag', 1); // 1 for active
-            $pmonthRaw = $request->input('p_month');
+            $pid = $request->input('p_id');
             $nrc = $request->input('m_NRC');
             $address = $request->input('m_address');
             $mRegDate = now();
             $mExpDate = null;
             $duration = '';
 
-            if (!is_numeric($pmonthRaw) || (int)$pmonthRaw <= 0) {
-    return response()->json([
-        'error' => 'Invalid purchase month value.'
-    ], 400);
-}
-
-            $pmonth = (int) $pmonthRaw;
-
             // Calculate expiry date
-            if($pmonth){
-                $mExpDate = $mRegDate->copy()->addMonths($pmonth);
-                $duration = $pmonth*30; 
-
-            } else {
+            if($pid == 1){
+                $mExpDate = $mRegDate->copy()->addDays(30); // 1 month
+                $duration = 30;
+            }else if($pid == 2){
+                $mExpDate = $mRegDate->copy()->addDays(60); // 1 month
+                $duration = 60;
+            }else if($pid == 3){
+                $mExpDate = $mRegDate->copy()->addDays(90); // 1 month
+                $duration = 90;
+            }
+                else {
                 return response()->json([
                     'error' => 'Invalid purchase ID.'
                 ], 400);
@@ -77,7 +75,7 @@ DB::beginTransaction();
             'm_email' => $mEmail,
             'm_password' => $mPassword, // Hash the password // AutoGenerate password
             'm_flag' => $mFlag,
-            'p_id' => $pmonth,
+            'p_id' => $pid,
             'm_reg_date' => $mRegDate,
             'm_expiry_date' => $mExpDate,
             'm_NRC' => $nrc,
@@ -117,7 +115,7 @@ DB::beginTransaction();
         };
 
         // Retrieve the purchase amount based on p_id
-        $purchaseAmount = \App\Models\Purchase::where('p_id', $pmonth)->value('p_amount');
+        $purchaseAmount = \App\Models\Purchase::where('p_id', $pid)->value('p_amount');
 
         
         // Create Cash record
