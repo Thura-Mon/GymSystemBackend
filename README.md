@@ -44,5 +44,12 @@ This is the **Laravel backend API** for the **Supreme Gym Management System**, p
 - **Laravel Framework 12.19.3**  
 - PHP >= 8.1  
 - Composer  
-- MySQL / PostgreSQL  
+- MySQL / PostgreSQL
+
+---
+
+### Clone Repository
+```bash
+git clone https://github.com/thura-mon/supreme-gym-backend.git
+cd supreme-gym-backend
 
