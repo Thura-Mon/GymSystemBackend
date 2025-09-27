@@ -1,6 +1,7 @@
 # 🏋️ Supreme Gym Management System – Laravel Backend
 
 This is the **Laravel backend API** for the **Supreme Gym Management System**, powering both:
+The Laravel backend API for a Flutter + Laravel gym system, for demo/local use
 
 - **Admin Desktop App (Flutter)** – manage members, scan QR codes, handle subscriptions, view transactions, and manage trainers.  
 - **User Mobile App (Flutter)** – login, QR check-in, subscription, BMI calculation, trainer rating, and profile management.  
