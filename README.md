@@ -51,6 +51,6 @@ The Laravel backend API for a Flutter + Laravel gym system, for demo/local use
 
 ### Clone Repository
 ```bash
-git clone https://github.com/thura-mon/supreme-gym-backend.git
-cd supreme-gym-backend
+git clone https://github.com/Thura-Mon/GymSystemBackend.git
+cd GymSystemBackend
 
