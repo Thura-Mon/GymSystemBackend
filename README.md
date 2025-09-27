@@ -15,14 +15,13 @@ This repository contains the **Laravel backend API** for the **Supreme Gym Manag
 
 ### 🔑 Authentication & Security
 - Login & OTP-based password reset  
-- Change password  
-- Role-based access (Admin vs Member)  
+- Change password
 
 ### 👤 Member Features
 - Register & update profile (except Gmail)  
 - Upload profile image  
 - QR check-in with daily validation  
-- Membership plan subscription (`one`, `two`, `three`)  
+- Membership plan subscription (`one`, `two`, `three` months)  
 - View expiry date & subscription history  
 - BMI calculator (save results & view history)  
 - Rate trainers with star rating  
